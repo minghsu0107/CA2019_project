@@ -10,17 +10,17 @@ always @ ( * ) begin
     PCWrite_o = 1'b1;
 
     if (MemRead_IDEX && (rd_IDEX == rs1_IFID || rd_IDEX == rs2_IFID)) begin // stall
-        PCWrite_o <= 1'b0
-        IFIDStall_o <= 1'b1
-        IFIDFlush_o <= 1'b0
-        Mux_o <= 1'b0
+        PCWrite_o <= 1'b0;
+        IFIDStall_o <= 1'b1;
+        IFIDFlush_o <= 1'b0;
+        Mux_o <= 1'b0;
     end
 
     if (ID_equal) begin // flush
-        PCWrite_o <= 1'b1
-        IFIDStall_o <= 1'b0
-        IFIDFlush_o <= 1'b1
-        Mux_o <= 1'b1
+        PCWrite_o <= 1'b1;
+        IFIDStall_o <= 1'b0;
+        IFIDFlush_o <= 1'b1;
+        Mux_o <= 1'b1;
     end
 end
 
