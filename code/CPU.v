@@ -169,6 +169,7 @@ wire [1:0] EXMem;
 wire EXWB;
 
 IDEX IDEX(
+    .clk_i (clk_i),
     .rs1_data (IDrs1_data),
     .rs2_data (IDrs2_data),
     .Iimm (IDimm_val),
@@ -229,6 +230,7 @@ wire [1:0] Mem;
 wire MEM_WB,MEM_WBSrc;
 
 EXMEM EXMEM(
+    .clk_i (clk_i),
     .WB_i (EXWB),
     .Mem_i (EXMem),
     .ALUres_i (ALUans),
@@ -257,6 +259,7 @@ wire [4:0] WBrd;
 wire WBWB,WB_WBSrc;
 
 MEMWB MEMWB(
+    .clk_i (clk_i),
     .WB_i (MEM_WB),
     .MemRdata_i (MemRdata),
     .ALUres_i (MEM_ALUres),
@@ -319,4 +322,3 @@ assign IFstall = HDstall;
 assign EXnop = IFflush | IFstall;
 
 endmodule
-
