@@ -12,7 +12,6 @@ input         start_i;
 
 wire [31:0] cur_PC,nxt_PC1,branch_PC,nxt_PC;
 wire PCWrite,PC_select;
-assign PCWrite = 1'b1;
 
 Adder Add_PC(
     .data1_i (cur_PC),
@@ -153,7 +152,6 @@ Control Control(
 wire [4:0] MuxIn,MuxOut;
 wire EXnop;
 assign MuxIn = {ALUOp1,IDMem1,IDWB1};
-// EXnop
 
 CtrlMux CtrlMux(
     .data1_i (MuxIn),
@@ -301,6 +299,25 @@ Forwarding_unit FU(
 
 assign select1 = ForwardA;
 assign select2 = ForwardB;
+
+wire HD_PCWrite,HDstall,HDflush,HDMux;
+
+HarzardDetection HD(
+    .MemRead_IDEX (EXMem[0]),
+    .rd_IDEX (EXrd),
+    .rs1_IFID (IDrs1),
+    .rs2_IFID (IDrs2),
+    .ID_equal (ID_EQ),
+    .PCWrite_o (HD_PCWrite),
+    .IFIDStall_o (HDstall),
+    .IFIDFlush_o (HDflush),
+    .Mux_o (HDMux)
+);
+
+assign PCWrite = HD_PCWrite;
+assign IFflush = HDflush;
+assign IFstall = HDstall;
+assign EXnop = IFflush | IFstall;
 
 endmodule
 
