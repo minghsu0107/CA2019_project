@@ -60,7 +60,7 @@ end
   
 always@(posedge Clk) begin
     // TODO: change # of cycles as you need
-    if(counter == 10)    // stop after 30 cycles
+    if(counter == 4)    // stop after 30 cycles
         $finish;
 
     // TODO: put in your own signal to count stall and flush
@@ -75,7 +75,9 @@ always@(posedge Clk) begin
     $fdisplay(outfile, "instruction = %d, ID-instruction = %d\n",CPU.instr,CPU.ID_instr);
     $fdisplay(outfile, "rs1 = %d, rs2 = %d, rd = %d\n",CPU.RS1addr,CPU.RS2addr,CPU.RDaddr);
     $fdisplay(outfile, "val1 = %d, val2 = %d, res = %d\n",CPU.Src1,CPU.Src2,CPU.ALUans);
-    $fdisplay(outfile, "WBrd = %d, WBdata = %d, WB_ALUres = %d\n",CPU.WBrd,CPU.WBdata,CPU.WB_ALUres);
+    $fdisplay(outfile, "IFflush = %d, IFstall = %d, ID_EQ = %d\n",CPU.IFflush,CPU.IFstall,CPU.ID_EQ);
+    $fdisplay(outfile, "MuxIn = %d, EXnop = %d, MuxOut = %d\n",CPU.MuxIn,CPU.EXnop,CPU.MuxOut);
+    $fdisplay(outfile, "WBWB = %d, WBrd = %d, WBdata = %d, WB_ALUres = %d\n",CPU.IDWB,CPU.WBrd,CPU.WBdata,CPU.WB_ALUres);
     $fdisplay(outfile, "Mem = %d, MEM_WBSrc = %d\n",CPU.Mem,CPU.MEM_WBSrc);
 
     // print Registers

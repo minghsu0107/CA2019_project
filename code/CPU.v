@@ -72,8 +72,6 @@ Data_Memory Data_Memory(
 
 wire [31:0] ID_PC,ID_instr;
 wire IFflush,IFstall;
-assign IFflush = 1'b0;
-assign IFstall = 1'b0;
 
 IFID IFID(
     .clk (clk_i),
@@ -263,7 +261,7 @@ MEMWB MEMWB(
     .MemRdata_i (MemRdata),
     .ALUres_i (MEM_ALUres),
     .rd_addr_i (MEMrd),
-    .WBSrc_i (Mem_WBSrc),
+    .WBSrc_i (MEM_WBSrc),
     .WB_o (WBWB),
     .MemRdata_o (WB_Memdata),
     .ALUres_o (WB_ALUres),
@@ -302,12 +300,13 @@ assign select2 = ForwardB;
 
 wire HD_PCWrite,HDstall,HDflush,HDMux;
 
-HarzardDetection HD(
+HazardDetection HD(
     .MemRead_IDEX (EXMem[0]),
     .rd_IDEX (EXrd),
     .rs1_IFID (IDrs1),
     .rs2_IFID (IDrs2),
     .ID_equal (ID_EQ),
+    .isBranch (IDopcode[6]),
     .PCWrite_o (HD_PCWrite),
     .IFIDStall_o (HDstall),
     .IFIDFlush_o (HDflush),

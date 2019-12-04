@@ -9,4 +9,5 @@ module MEMWB(WB_i,MemRdata_i,ALUres_i,rd_addr_i,WBSrc_i,WB_o,MemRdata_o,ALUres_o
     assign MemRdata_o = MemRdata_i;
     assign ALUres_o = ALUres_i;
     assign rd_addr_o = rd_addr_i;
+    assign WBSrc_o = WBSrc_i;
 endmodule

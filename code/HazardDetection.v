@@ -2,8 +2,7 @@ module HazardDetection (MemRead_IDEX, rd_IDEX, rs1_IFID, rs2_IFID, ID_equal, PCW
 
 input [0:0] MemRead_IDEX, ID_equal;
 input [4:0] rd_IDEX, rs1_IFID, rs2_IFID;
-output reg [0:0] PCWrite_o, IFIDStall_o, IFIDFlush_o;
-output reg [1:0] Mux_o;
+output reg [0:0] PCWrite_o, IFIDStall_o, IFIDFlush_o,Mux_o;
 
 always @ ( * ) begin
     {IFIDStall_o, IFIDFlush_o, Mux_o} <= 0;
