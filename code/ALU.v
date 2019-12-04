@@ -10,6 +10,7 @@ module ALU(data1_i,data2_i,ALUCtrl_i,data_o);
             4'b0110: tmp = data1_i - data2_i;
             4'b0000: tmp = data1_i & data2_i;
             4'b0001: tmp = data1_i | data2_i;
+            4'b1111: tmp = data1_i * data2_i;
         endcase
     end
 endmodule
