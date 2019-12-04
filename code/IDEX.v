@@ -34,6 +34,7 @@ module IDEX(rs1_data,rs2_data,Iimm,Simm,rs1_addr,rs2_addr,rd_addr,funct3,funct7,
                 10'b0100000000: tmp = 4'b0110;
                 10'b0000000111: tmp = 4'b0000;
                 10'b0000000110: tmp = 4'b0001;
+                10'b0000001000: tmp = 4'b1111;
             endcase
     end
 endmodule

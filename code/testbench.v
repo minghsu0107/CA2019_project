@@ -60,7 +60,7 @@ end
   
 always@(posedge Clk) begin
     // TODO: change # of cycles as you need
-    if(counter == 10)    // stop after 30 cycles
+    if(counter == 15)    // stop after 30 cycles
         $finish;
 
     // TODO: put in your own signal to count stall and flush
