@@ -12,6 +12,7 @@ input         start_i;
 
 wire [31:0] cur_PC,nxt_PC1,branch_PC,nxt_PC;
 wire PCWrite,PC_select;
+assign PCWrite = 1'b1;
 
 Adder Add_PC(
     .data1_i (cur_PC),
@@ -22,7 +23,7 @@ Adder Add_PC(
 MUX PC_MUX(
     .data1_i (nxt_PC1),
     .data2_i (branch_PC),
-    .select_i (PC_select),
+    .select_i (1'b0),
     .data_o (nxt_PC)
 );
 
@@ -72,6 +73,8 @@ Data_Memory Data_Memory(
 
 wire [31:0] ID_PC,ID_instr;
 wire IFflush,IFstall;
+assign IFflush = 1'b0;
+assign IFstall = 1'b0;
 
 IFID IFID(
     .clk (clk_i),
@@ -282,6 +285,22 @@ MUX WB_MUX(
 assign RDaddr = WBrd;
 assign RDdata = WBdata;
 assign RegWrite = WBWB;
+
+wire [1:0] ForwardA,ForwardB;
+
+Forwarding_unit FU(
+    .rs1_IDEX (EXrs1),
+    .rs2_IDEX (EXrs2),
+    .rd_EXMEM (MEMrd),
+    .rd_MEMWB (WBrd),
+    .RegWrite_EXMEM (MEM_WB),
+    .RegWrite_MEMWB (WBWB),
+    .ForwardA (ForwardA),
+    .ForwardB (ForwardB)
+);
+
+assign select1 = ForwardA;
+assign select2 = ForwardB;
 
 endmodule
 
