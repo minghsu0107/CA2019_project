@@ -4,6 +4,7 @@ module TestBench;
 
 reg                Clk;
 reg                Start;
+reg                Reset;
 integer            i, outfile, counter;
 integer            stall, flush;
 
@@ -11,6 +12,7 @@ always #(`CYCLE_TIME/2) Clk = ~Clk;
 
 CPU CPU(
     .clk_i  (Clk),
+    .rst_i  (Reset),
     .start_i(Start)
 );
   
@@ -45,12 +47,12 @@ initial begin
     // Set Input n into data memory at 0x00
     CPU.Data_Memory.memory[0] = 8'h5;       // n = 5 for example
     
-    Clk = 1;
-    //Reset = 0;
+    Clk = 0;
+    Reset = 0;
     Start = 0;
     
     #(`CYCLE_TIME/4) 
-    //Reset = 1;
+    Reset = 1;
     Start = 1;
         
     
@@ -67,8 +69,10 @@ always@(posedge Clk) begin
    
 
     // print PC
-    $fdisplay(outfile, "cycle = %d, Start = %d, Stall = %d, Flush = %d\nPC = %d", counter, Start, stall, flush, CPU.PC.pc_o);
-    
+    $fdisplay(outfile, "cycle = %d, Start = %d, Stall = %d, Flush = %d\nPC = %d\n", counter, Start, stall, flush, CPU.PC.pc_o);
+
+    $fdisplay(outfile, "nxt_PC1 = %d, branch_PC = %d, nxt_PC = %d, PC_select\n",CPU.nxt_PC1,CPU.branch_PC,CPU.nxt_PC,CPU.PC_select);
+
     // print Registers
     $fdisplay(outfile, "Registers");
     $fdisplay(outfile, "x0 = %d, x8  = %d, x16 = %d, x24 = %d", CPU.Registers.register[0], CPU.Registers.register[8] , CPU.Registers.register[16], CPU.Registers.register[24]);

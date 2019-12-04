@@ -1,11 +1,13 @@
 module CPU
 (
-    clk_i, 
+    clk_i,
+    rst_i,
     start_i
 );
 
 // Ports
 input         clk_i;
+input         rst_i;
 input         start_i;
 
 wire [31:0] cur_PC,nxt_PC1,branch_PC,nxt_PC;
@@ -26,7 +28,8 @@ MUX PC_MUX(
 
 PC PC(
     .clk_i          (clk_i),
-    .start_i        (rst_i),
+    .start_i        (start_i),
+    .rst_i          (rst_i),
     .PCWrite_i      (PCWrite),
     .pc_i           (nxt_PC),
     .pc_o           (cur_PC)
@@ -59,11 +62,10 @@ wire MemWrite;
 
 Data_Memory Data_Memory(
     .clk_i          (clk_i),
-
     .addr_i         (DMaddr),
     .MemWrite_i     (MemWrite),
-    .data_i         (DMRdata),
-    .data_o         (DMWdata)
+    .data_i         (DMWdata),
+    .data_o         (DMRdata)
 );
 
 // ID stage
@@ -222,10 +224,10 @@ ALU ALU(
 
 // MEM stage
 
-wire [31:0] Memaddr,Memdata,MEM_ALUres;
+wire [31:0] Memaddr,Memdata,MEM_ALUres,MemRdata;
 wire [4:0] MEMrd;
 wire [1:0] Mem;
-wire MEMWB;
+wire MEM_WB,MEM_WBSrc;
 
 EXMEM EXMEM(
     .WB_i (EXWB),
@@ -237,11 +239,49 @@ EXMEM EXMEM(
     .rd_addr_i (EXrd),
     .Memaddr_o (Memaddr),
     .Memdata_o (Memdata),
-    .WB_o (MEMWB),
+    .WB_o (MEM_WB),
     .Mem_o (Mem),
     .rd_addr_o (MEMrd),
     .ALUres_o (MEM_ALUres)
 );
+
+assign DMaddr = Memaddr;
+assign DMWdata = Memdata;
+assign MemWrite = ( Mem == 2'b10 ? 1'b1 : 1'b0 );
+assign MemRdata = DMRdata;
+assign MEM_WBSrc = ( Mem == 2'b01 ? 1'b1 : 1'b0 );
+
+// WB stage
+
+wire [31:0] WB_Memdata,WB_ALUres;
+wire [4:0] WBrd;
+wire WBWB,WB_WBSrc;
+
+MEMWB MEMWB(
+    .WB_i (MEM_WB),
+    .MemRdata_i (MemRdata),
+    .ALUres_i (MEM_ALUres),
+    .rd_addr_i (MEMrd),
+    .WBSrc_i (Mem_WBSrc),
+    .WB_o (WBWB),
+    .MemRdata_o (WB_Memdata),
+    .ALUres_o (WB_ALUres),
+    .rd_addr_o (WBrd),
+    .WBSrc_o (WB_WBSrc)
+);
+
+wire [31:0] WBdata;
+
+MUX WB_MUX(
+    .data1_i (WB_ALUres),
+    .data2_i (WB_Memdata),
+    .select_i (WB_WBSrc),
+    .data_o (WBdata)
+);
+
+assign RDaddr = WBrd;
+assign RDdata = WBdata;
+assign RegWrite = WBWB;
 
 endmodule
 
