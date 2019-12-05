@@ -15,14 +15,14 @@ wire PCWrite,PC_select;
 
 Adder Add_PC(
     .data1_i (cur_PC),
-    .data2_i (13'b100),
+    .data2_i (32'b100),
     .data_o (nxt_PC1)
 );
 
 MUX PC_MUX(
     .data1_i (nxt_PC1),
     .data2_i (branch_PC),
-    .select_i (1'b0),
+    .select_i (PC_select),
     .data_o (nxt_PC)
 );
 
@@ -86,9 +86,8 @@ IFID IFID(
 wire [6:0] IDfunct7,IDopcode;
 wire [4:0] IDrs1,IDrs2,IDrd;
 wire [2:0] IDfunct3;
-wire [11:0] IDIimm1,IDSimm1;
-wire [12:0] IDBimm;
-wire [31:0] IDIimm,IDSimm;
+wire [11:0] IDIimm1,IDSimm1,IDBimm1;
+wire [31:0] IDIimm,IDSimm,IDBimm2,IDBimm;
 assign IDfunct7 = ID_instr[31:25];
 assign IDfunct3 = ID_instr[14:12];
 assign IDopcode = ID_instr[6:0];
@@ -98,9 +97,8 @@ assign IDrd = ID_instr[11:7];
 assign IDIimm1 = ID_instr[31:20];
 assign IDSimm1[11:5] = ID_instr[31:25];
 assign IDSimm1[4:0] = ID_instr[11:7];
-assign {IDBimm[12],IDBimm[10:5]} = ID_instr[31:25];
-assign {IDBimm[4:1],IDBimm[11]} = ID_instr[11:7];
-assign IDBimm[0] = 1'b0;
+assign {IDBimm1[11],IDBimm1[9:4]} = ID_instr[31:25];
+assign {IDBimm1[3:0],IDBimm1[10]} = ID_instr[11:7];
 
 assign RS1addr = IDrs1;
 assign RS2addr = IDrs2;
@@ -127,6 +125,14 @@ SignExtend SignExtendS(
     .data_i (IDSimm1),
     .data_o (IDSimm)
 );
+
+SignExtend SignExtendB(
+    .data_i (IDBimm1),
+    .data_o (IDBimm2)
+);
+
+assign IDBimm[31:1] = IDBimm2[30:0];
+assign IDBimm[0] = 1'b0;
 
 assign IDimm_val = ( IDopcode[5] ? IDSimm : IDIimm );
 
@@ -327,5 +333,6 @@ assign PCWrite = HD_PCWrite;
 assign IFflush = HDflush;
 assign IFstall = HDstall;
 assign EXnop = IFflush | IFstall;
+assign PC_select = HDflush;
 
 endmodule

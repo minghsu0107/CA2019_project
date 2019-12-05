@@ -13,7 +13,7 @@ assign Mux_o = tmp_Mux_o;
 
 always @ ( * ) begin
     {tmp_IFIDStall_o, tmp_IFIDFlush_o, tmp_Mux_o} <= 0;
-    tmp_PCWrite_o = 1'b1;
+    tmp_PCWrite_o <= 1'b1;
 
     if (MemRead_IDEX && rd_IDEX != 0 && (rd_IDEX == rs1_IFID || rd_IDEX == rs2_IFID)) begin // stall
         tmp_PCWrite_o <= 1'b0;
