@@ -62,29 +62,29 @@ end
 
 always@(posedge Clk) begin
     // TODO: change # of cycles as you need
-    if(counter == 8)    // stop after 30 cycles
+    if(counter == 15)    // stop after 30 cycles
         $finish;
 
     // TODO: put in your own signal to count stall and flush
-    // if(CPU.HazardDetection.Stall_o == 1 && CPU.Control.Branch_o == 0)stall = stall + 1;
-    // if(CPU.HazardDetection.Flush_o == 1)flush = flush + 1;
+     if(CPU.IFstall_o == 1 && CPU.Control. == 0)stall = stall + 1;
+     if(CPU.IFflush_o == 1)flush = flush + 1;
 
 
     // print PC
     $fdisplay(outfile, "cycle = %d, Start = %d, Stall = %d, Flush = %d\nPC = %d\n", counter, Start, stall, flush, CPU.PC.pc_o);
 
-    $fdisplay(outfile, "nxt_PC1 = %d, branch_PC = %d, nxt_PC = %d, PC_select\n",CPU.nxt_PC1,CPU.branch_PC,CPU.nxt_PC,CPU.PC_select);
-    $fdisplay(outfile, "instruction = %d, ID-instruction = %d\n",CPU.instr,CPU.ID_instr);
-    $fdisplay(outfile, "rs1 = %d, rs2 = %d, rd = %d\n",CPU.IDrs1,CPU.IDrs2,CPU.IDrd);
-    $fdisplay(outfile, "IDIimm = %d, IDSimm = %d, IDBimm = %d, IDimm_val = %d\n",CPU.IDIimm,CPU.IDSimm,CPU.IDBimm,CPU.IDimm_val);
-    $fdisplay(outfile, "RS1data = %d, RS2data = %d, ALUSrc = %d\n",CPU.RS1data,CPU.RS2data,CPU.ALUSrc);
-    $fdisplay(outfile, "val1 = %d, val2 = %d, res = %d\n",CPU.Src1,CPU.Src2,CPU.ALUans);
-    $fdisplay(outfile, "IFflush = %d, IFstall = %d, ID_EQ = %d\n",CPU.IFflush,CPU.IFstall,CPU.ID_EQ);
-    $fdisplay(outfile, "MuxIn = %d, EXnop = %d, MuxOut = %d\n",CPU.MuxIn,CPU.EXnop,CPU.MuxOut);
-    $fdisplay(outfile, "WBWB = %d, WBrd = %d, WBdata = %d, WB_ALUres = %d\n",CPU.IDWB,CPU.WBrd,CPU.WBdata,CPU.WB_ALUres);
-    $fdisplay(outfile, "Mem = %d, MEM_WBSrc = %d\n",CPU.Mem,CPU.MEM_WBSrc);
-    $fdisplay(outfile, "IDrd = %d, EXrd = %d, MEMrd = %d, WBrd = %d\n",CPU.IDrd,CPU.EXrd,CPU.MEMrd,CPU.WBrd);
-    $fdisplay(outfile, "EXval1 = %d, MemForward1 = %d, ALUForward1 = %d, select1 = %d\n",CPU.EXval1,CPU.MemForward1,CPU.ALUForward1,CPU.select1);
+    //$fdisplay(outfile, "nxt_PC1 = %d, branch_PC = %d, nxt_PC = %d, PC_select\n",CPU.nxt_PC1,CPU.branch_PC,CPU.nxt_PC,CPU.PC_select);
+    //$fdisplay(outfile, "instruction = %d, ID-instruction = %d\n",CPU.instr,CPU.ID_instr);
+    //$fdisplay(outfile, "rs1 = %d, rs2 = %d, rd = %d\n",CPU.IDrs1,CPU.IDrs2,CPU.IDrd);
+    //$fdisplay(outfile, "IDIimm = %d, IDSimm = %d, IDBimm = %d, IDimm_val = %d\n",CPU.IDIimm,CPU.IDSimm,CPU.IDBimm,CPU.IDimm_val);
+    //$fdisplay(outfile, "RS1data = %d, RS2data = %d, ALUSrc = %d\n",CPU.IDrs1_data,CPU.IDrs2_data,CPU.ALUSrc);
+    //$fdisplay(outfile, "val1 = %d, val2 = %d, res = %d, rs2 = %d\n",CPU.Src1,CPU.Src2,CPU.ALUans,CPU.EX_rs2_data);
+    //$fdisplay(outfile, "IFflush = %d, IFstall = %d, ID_EQ = %d\n",CPU.IFflush,CPU.IFstall,CPU.ID_EQ);
+    //$fdisplay(outfile, "MuxIn = %d, EXnop = %d, MuxOut = %d\n",CPU.MuxIn,CPU.EXnop,CPU.MuxOut);
+    //$fdisplay(outfile, "WBWB = %d, WBrd = %d, WBdata = %d, WB_ALUres = %d\n",CPU.IDWB,CPU.WBrd,CPU.WBdata,CPU.WB_ALUres);
+    //$fdisplay(outfile, "Mem = %d, MEM_WBSrc = %d\n",CPU.Mem,CPU.MEM_WBSrc);
+    //$fdisplay(outfile, "IDrd = %d, EXrd = %d, MEMrd = %d, WBrd = %d\n",CPU.IDrd,CPU.EXrd,CPU.MEMrd,CPU.WBrd);
+    //$fdisplay(outfile, "EXval1 = %d, MemForward1 = %d, ALUForward1 = %d, select1 = %d, select2 = %d\n",CPU.EXval1,CPU.MemForward1,CPU.ALUForward1,CPU.select1,CPU.select2);
 
     // print Registers
     $fdisplay(outfile, "Registers");

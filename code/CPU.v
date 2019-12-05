@@ -168,7 +168,7 @@ wire [31:0] EXval1,EXval2,EXimm;
 wire [3:0] ALUCtrl;
 wire [4:0] EXrs1,EXrs2,EXrd;
 wire [1:0] EXMem;
-wire EXWB;
+wire EXWB,EX_ALUSrc;
 
 IDEX IDEX(
     .clk_i (clk_i),
@@ -186,15 +186,17 @@ IDEX IDEX(
     .ALUSrc (ALUSrc),
     .val1 (EXval1),
     .val2 (EXval2),
+    .imm (EXimm),
     .ALUCtrl (ALUCtrl),
     .rs1_addr_o (EXrs1),
     .rs2_addr_o (EXrs2),
     .rd_addr_o (EXrd),
     .Mem_o (EXMem),
-    .WB_o (EXWB)
+    .WB_o (EXWB),
+    .ALUSrc_o (EX_ALUSrc)
 );
 
-wire [31:0] MemForward1,MemForward2,ALUForward1,ALUForward2,Src1,Src2;
+wire [31:0] MemForward1,MemForward2,ALUForward1,ALUForward2,Src1,Src2,EX_rs2_data;
 wire [1:0] select1,select2;
 
 ALU_MUX ALU_SRC1(
@@ -210,8 +212,10 @@ ALU_MUX ALU_SRC2(
     .data2_i (MemForward2),
     .data3_i (ALUForward2),
     .select_i (select2),
-    .data_o (Src2)
+    .data_o (EX_rs2_data)
 );
+
+assign Src2 = ( EX_ALUSrc ? EXimm : EX_rs2_data );
 
 wire [31:0] ALUans;
 
@@ -235,7 +239,7 @@ EXMEM EXMEM(
     .Mem_i (EXMem),
     .ALUres_i (ALUans),
     .rs1_data_i (EXval1),
-    .rs2_data_i (EXval2),
+    .rs2_data_i (EX_rs2_data),
     .rd_addr_i (EXrd),
     .Memaddr_o (Memaddr),
     .Memdata_o (Memdata),

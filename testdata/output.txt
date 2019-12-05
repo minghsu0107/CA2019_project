@@ -11,7 +11,7 @@ IDIimm =          0, IDSimm =          0, IDBimm =    0, IDimm_val =          0
 
 RS1data =          0, RS2data =          0, ALUSrc = 1
 
-val1 =          0, val2 =          0, res =          0
+val1 =          0, val2 =          x, res =          0, rs2 =          0
 
 IFflush = 0, IFstall = 0, ID_EQ = 1
 
@@ -23,7 +23,7 @@ Mem = 0, MEM_WBSrc = 0
 
 IDrd =  0, EXrd =  0, MEMrd =  0, WBrd =  0
 
-EXval1 =          0, MemForward1 =          0, ALUForward1 =          0, select1 = 0
+EXval1 =          0, MemForward1 =          0, ALUForward1 =          0, select1 = 0, select2 = 0
 
 Registers
 x0 =          0, x8  =          0, x16 =          0, x24 =          0
@@ -57,7 +57,7 @@ IDIimm =          0, IDSimm =          5, IDBimm = 2052, IDimm_val =          5
 
 RS1data =          0, RS2data =          0, ALUSrc = 0
 
-val1 =          0, val2 =          0, res =          0
+val1 =          0, val2 =          0, res =          0, rs2 =          0
 
 IFflush = 0, IFstall = 0, ID_EQ = 1
 
@@ -69,7 +69,7 @@ Mem = 0, MEM_WBSrc = 0
 
 IDrd =  5, EXrd =  0, MEMrd =  0, WBrd =  0
 
-EXval1 =          0, MemForward1 =          0, ALUForward1 =          0, select1 = 0
+EXval1 =          0, MemForward1 =          0, ALUForward1 =          0, select1 = 0, select2 = 0
 
 Registers
 x0 =          0, x8  =          0, x16 =          0, x24 =          0
@@ -103,7 +103,7 @@ IDIimm =         10, IDSimm =          6, IDBimm =    6, IDimm_val =         10
 
 RS1data =          0, RS2data =          0, ALUSrc = 1
 
-val1 =          0, val2 =          0, res =          0
+val1 =          0, val2 =          0, res =          0, rs2 =          0
 
 IFflush = 0, IFstall = 0, ID_EQ = 1
 
@@ -115,7 +115,7 @@ Mem = 1, MEM_WBSrc = 1
 
 IDrd =  6, EXrd =  5, MEMrd =  0, WBrd =  0
 
-EXval1 =          0, MemForward1 =          0, ALUForward1 =          0, select1 = 0
+EXval1 =          0, MemForward1 =          0, ALUForward1 =          0, select1 = 0, select2 = 0
 
 Registers
 x0 =          0, x8  =          0, x16 =          0, x24 =          0
@@ -149,7 +149,7 @@ IDIimm =          0, IDSimm =          0, IDBimm =    0, IDimm_val =          0
 
 RS1data =          0, RS2data =          0, ALUSrc = 1
 
-val1 =          0, val2 =         10, res =         10
+val1 =          0, val2 =         10, res =         10, rs2 =          0
 
 IFflush = 0, IFstall = 0, ID_EQ = 1
 
@@ -161,7 +161,7 @@ Mem = 0, MEM_WBSrc = 0
 
 IDrd =  0, EXrd =  6, MEMrd =  5, WBrd =  0
 
-EXval1 =          0, MemForward1 =          5, ALUForward1 =          0, select1 = 0
+EXval1 =          0, MemForward1 =          5, ALUForward1 =          0, select1 = 0, select2 = 0
 
 Registers
 x0 =          0, x8  =          0, x16 =          0, x24 =          0
@@ -195,7 +195,7 @@ IDIimm =          6, IDSimm =          4, IDBimm =    4, IDimm_val =          4
 
 RS1data =          0, RS2data =          0, ALUSrc = 1
 
-val1 =          0, val2 =          0, res =          0
+val1 =          0, val2 =          0, res =          0, rs2 =          0
 
 IFflush = 0, IFstall = 0, ID_EQ = 1
 
@@ -207,7 +207,7 @@ Mem = 0, MEM_WBSrc = 0
 
 IDrd =  4, EXrd =  0, MEMrd =  6, WBrd =  5
 
-EXval1 =          0, MemForward1 =          0, ALUForward1 =         10, select1 = 1
+EXval1 =          0, MemForward1 =          0, ALUForward1 =         10, select1 = 1, select2 = 0
 
 Registers
 x0 =          0, x8  =          0, x16 =          0, x24 =          0
@@ -241,7 +241,7 @@ IDIimm =          4, IDSimm =         30, IDBimm =   30, IDimm_val =          4
 
 RS1data =          0, RS2data =          0, ALUSrc = 1
 
-val1 =          0, val2 =         10, res =         10
+val1 =          0, val2 =          4, res =          4, rs2 =         10
 
 IFflush = 0, IFstall = 0, ID_EQ = 1
 
@@ -253,7 +253,7 @@ Mem = 2, MEM_WBSrc = 0
 
 IDrd = 30, EXrd =  4, MEMrd =  0, WBrd =  6
 
-EXval1 =          0, MemForward1 =         10, ALUForward1 =          0, select1 = 0
+EXval1 =          0, MemForward1 =         10, ALUForward1 =          0, select1 = 0, select2 = 1
 
 Registers
 x0 =          0, x8  =          0, x16 =          0, x24 =          0
@@ -287,7 +287,7 @@ IDIimm =          6, IDSimm =         31, IDBimm = 2078, IDimm_val =         31
 
 RS1data =          0, RS2data =         10, ALUSrc = 0
 
-val1 =          0, val2 =          4, res =          4
+val1 =          0, val2 =          4, res =          4, rs2 =          0
 
 IFflush = 0, IFstall = 1, ID_EQ = 0
 
@@ -299,7 +299,7 @@ Mem = 2, MEM_WBSrc = 0
 
 IDrd = 31, EXrd = 30, MEMrd =  4, WBrd =  0
 
-EXval1 =          0, MemForward1 =          0, ALUForward1 =         10, select1 = 0
+EXval1 =          0, MemForward1 =          0, ALUForward1 =          4, select1 = 0, select2 = 0
 
 Registers
 x0 =          0, x8  =          0, x16 =          0, x24 =          0
@@ -333,19 +333,19 @@ IDIimm =          6, IDSimm =         31, IDBimm = 2078, IDimm_val =         31
 
 RS1data =          0, RS2data =         10, ALUSrc = 0
 
-val1 =          4, val2 =         10, res =         14
+val1 =          4, val2 =         10, res =         14, rs2 =         10
 
 IFflush = 0, IFstall = 0, ID_EQ = 0
 
 MuxIn = 17, EXnop = 0, MuxOut = 17
 
-WBWB = 1, WBrd =  4, WBdata =         10, WB_ALUres =         10
+WBWB = 1, WBrd =  4, WBdata =          4, WB_ALUres =          4
 
 Mem = 1, MEM_WBSrc = 1
 
 IDrd = 31, EXrd = 31, MEMrd = 30, WBrd =  4
 
-EXval1 =          0, MemForward1 =         10, ALUForward1 =          4, select1 = 2
+EXval1 =          0, MemForward1 =          4, ALUForward1 =          4, select1 = 2, select2 = 0
 
 Registers
 x0 =          0, x8  =          0, x16 =          0, x24 =          0
@@ -357,8 +357,330 @@ x5 =          0, x13 =          0, x21 =          0, x29 =          0
 x6 =         10, x14 =          0, x22 =          0, x30 =          0
 x7 =          0, x15 =          0, x23 =          0, x31 =          0
 Data Memory: 0x00 =          0
-Data Memory: 0x04 =          0
-Data Memory: 0x08 = 73786976294838206464
+Data Memory: 0x04 =         10
+Data Memory: 0x08 =          0
+Data Memory: 0x0c =          0
+Data Memory: 0x10 =          0
+Data Memory: 0x14 =          0
+Data Memory: 0x18 =          0
+Data Memory: 0x1c =          0
+
+
+cycle =           8, Start = 1, Stall =           0, Flush =           0
+PC =         28
+
+nxt_PC1 =         32, branch_PC =       2078, nxt_PC =         32, PC_select
+0
+instruction =   40046131, ID-instruction =   13632403
+
+rs1 =  0, rs2 = 13, rd =  7
+
+IDIimm =         13, IDSimm =          7, IDBimm = 2054, IDimm_val =         13
+
+RS1data =          0, RS2data =          0, ALUSrc = 1
+
+val1 =         10, val2 =         10, res =         20, rs2 =         10
+
+IFflush = 0, IFstall = 0, ID_EQ = 1
+
+MuxIn = 17, EXnop = 0, MuxOut = 17
+
+WBWB = 1, WBrd = 30, WBdata =         10, WB_ALUres =          4
+
+Mem = 0, MEM_WBSrc = 0
+
+IDrd =  7, EXrd = 31, MEMrd = 31, WBrd = 30
+
+EXval1 =          0, MemForward1 =         10, ALUForward1 =         14, select1 = 1, select2 = 0
+
+Registers
+x0 =          0, x8  =          0, x16 =          0, x24 =          0
+x1 =          0, x9  =          0, x17 =          0, x25 =          0
+x2 =          0, x10 =          0, x18 =          0, x26 =          0
+x3 =          0, x11 =          0, x19 =          0, x27 =          0
+x4 =          0, x12 =          0, x20 =          0, x28 =          0
+x5 =          0, x13 =          0, x21 =          0, x29 =          0
+x6 =         10, x14 =          0, x22 =          0, x30 =          0
+x7 =          0, x15 =          0, x23 =          0, x31 =          0
+Data Memory: 0x00 =          0
+Data Memory: 0x04 =         10
+Data Memory: 0x08 =          0
+Data Memory: 0x0c =          0
+Data Memory: 0x10 =          0
+Data Memory: 0x14 =          0
+Data Memory: 0x18 =          0
+Data Memory: 0x1c =          0
+
+
+cycle =           9, Start = 1, Stall =           0, Flush =           0
+PC =         32
+
+nxt_PC1 =         36, branch_PC =         88, nxt_PC =         36, PC_select
+0
+instruction =          0, ID-instruction =   40046131
+
+rs1 =  6, rs2 =  6, rd = 28
+
+IDIimm =         38, IDSimm =         60, IDBimm =   60, IDimm_val =         60
+
+RS1data =         10, RS2data =         10, ALUSrc = 0
+
+val1 =          0, val2 =         13, res =         13, rs2 =          0
+
+IFflush = 0, IFstall = 0, ID_EQ = 1
+
+MuxIn = 17, EXnop = 0, MuxOut = 17
+
+WBWB = 1, WBrd = 31, WBdata =         14, WB_ALUres =         14
+
+Mem = 0, MEM_WBSrc = 0
+
+IDrd = 28, EXrd =  7, MEMrd = 31, WBrd = 31
+
+EXval1 =          0, MemForward1 =         14, ALUForward1 =         20, select1 = 0, select2 = 0
+
+Registers
+x0 =          0, x8  =          0, x16 =          0, x24 =          0
+x1 =          0, x9  =          0, x17 =          0, x25 =          0
+x2 =          0, x10 =          0, x18 =          0, x26 =          0
+x3 =          0, x11 =          0, x19 =          0, x27 =          0
+x4 =          0, x12 =          0, x20 =          0, x28 =          0
+x5 =          0, x13 =          0, x21 =          0, x29 =          0
+x6 =         10, x14 =          0, x22 =          0, x30 =         10
+x7 =          0, x15 =          0, x23 =          0, x31 =          0
+Data Memory: 0x00 =          0
+Data Memory: 0x04 =         10
+Data Memory: 0x08 =          0
+Data Memory: 0x0c =          0
+Data Memory: 0x10 =          0
+Data Memory: 0x14 =          0
+Data Memory: 0x18 =          0
+Data Memory: 0x1c =          0
+
+
+cycle =          10, Start = 1, Stall =           0, Flush =           0
+PC =         36
+
+nxt_PC1 =         40, branch_PC =         32, nxt_PC =         40, PC_select
+0
+instruction =          0, ID-instruction =          0
+
+rs1 =  0, rs2 =  0, rd =  0
+
+IDIimm =          0, IDSimm =          0, IDBimm =    0, IDimm_val =          0
+
+RS1data =          0, RS2data =          0, ALUSrc = 1
+
+val1 =         10, val2 =         10, res =        100, rs2 =         10
+
+IFflush = 0, IFstall = 0, ID_EQ = 1
+
+MuxIn =  3, EXnop = 0, MuxOut =  3
+
+WBWB = 1, WBrd = 31, WBdata =         20, WB_ALUres =         20
+
+Mem = 0, MEM_WBSrc = 0
+
+IDrd =  0, EXrd = 28, MEMrd =  7, WBrd = 31
+
+EXval1 =         10, MemForward1 =         20, ALUForward1 =         13, select1 = 0, select2 = 0
+
+Registers
+x0 =          0, x8  =          0, x16 =          0, x24 =          0
+x1 =          0, x9  =          0, x17 =          0, x25 =          0
+x2 =          0, x10 =          0, x18 =          0, x26 =          0
+x3 =          0, x11 =          0, x19 =          0, x27 =          0
+x4 =          0, x12 =          0, x20 =          0, x28 =          0
+x5 =          0, x13 =          0, x21 =          0, x29 =          0
+x6 =         10, x14 =          0, x22 =          0, x30 =         10
+x7 =          0, x15 =          0, x23 =          0, x31 =          0
+Data Memory: 0x00 =          0
+Data Memory: 0x04 =         10
+Data Memory: 0x08 =          0
+Data Memory: 0x0c =          0
+Data Memory: 0x10 =          0
+Data Memory: 0x14 =          0
+Data Memory: 0x18 =          0
+Data Memory: 0x1c =          0
+
+
+cycle =          11, Start = 1, Stall =           0, Flush =           0
+PC =         40
+
+nxt_PC1 =         44, branch_PC =         36, nxt_PC =         44, PC_select
+0
+instruction =          0, ID-instruction =          0
+
+rs1 =  0, rs2 =  0, rd =  0
+
+IDIimm =          0, IDSimm =          0, IDBimm =    0, IDimm_val =          0
+
+RS1data =          0, RS2data =          0, ALUSrc = 1
+
+val1 =          0, val2 =          0, res =          0, rs2 =          0
+
+IFflush = 0, IFstall = 0, ID_EQ = 1
+
+MuxIn =  3, EXnop = 0, MuxOut =  3
+
+WBWB = 1, WBrd =  7, WBdata =         13, WB_ALUres =         13
+
+Mem = 0, MEM_WBSrc = 0
+
+IDrd =  0, EXrd =  0, MEMrd = 28, WBrd =  7
+
+EXval1 =          0, MemForward1 =         13, ALUForward1 =        100, select1 = 0, select2 = 0
+
+Registers
+x0 =          0, x8  =          0, x16 =          0, x24 =          0
+x1 =          0, x9  =          0, x17 =          0, x25 =          0
+x2 =          0, x10 =          0, x18 =          0, x26 =          0
+x3 =          0, x11 =          0, x19 =          0, x27 =          0
+x4 =          0, x12 =          0, x20 =          0, x28 =          0
+x5 =          0, x13 =          0, x21 =          0, x29 =          0
+x6 =         10, x14 =          0, x22 =          0, x30 =         10
+x7 =          0, x15 =          0, x23 =          0, x31 =         20
+Data Memory: 0x00 =          0
+Data Memory: 0x04 =         10
+Data Memory: 0x08 =          0
+Data Memory: 0x0c =          0
+Data Memory: 0x10 =          0
+Data Memory: 0x14 =          0
+Data Memory: 0x18 =          0
+Data Memory: 0x1c =          0
+
+
+cycle =          12, Start = 1, Stall =           0, Flush =           0
+PC =         44
+
+nxt_PC1 =         48, branch_PC =         40, nxt_PC =         48, PC_select
+0
+instruction =          0, ID-instruction =          0
+
+rs1 =  0, rs2 =  0, rd =  0
+
+IDIimm =          0, IDSimm =          0, IDBimm =    0, IDimm_val =          0
+
+RS1data =          0, RS2data =          0, ALUSrc = 1
+
+val1 =          0, val2 =          0, res =          0, rs2 =          0
+
+IFflush = 0, IFstall = 0, ID_EQ = 1
+
+MuxIn =  3, EXnop = 0, MuxOut =  3
+
+WBWB = 1, WBrd = 28, WBdata =        100, WB_ALUres =        100
+
+Mem = 1, MEM_WBSrc = 1
+
+IDrd =  0, EXrd =  0, MEMrd =  0, WBrd = 28
+
+EXval1 =          0, MemForward1 =        100, ALUForward1 =          0, select1 = 0, select2 = 0
+
+Registers
+x0 =          0, x8  =          0, x16 =          0, x24 =          0
+x1 =          0, x9  =          0, x17 =          0, x25 =          0
+x2 =          0, x10 =          0, x18 =          0, x26 =          0
+x3 =          0, x11 =          0, x19 =          0, x27 =          0
+x4 =          0, x12 =          0, x20 =          0, x28 =          0
+x5 =          0, x13 =          0, x21 =          0, x29 =          0
+x6 =         10, x14 =          0, x22 =          0, x30 =         10
+x7 =         13, x15 =          0, x23 =          0, x31 =         20
+Data Memory: 0x00 =          0
+Data Memory: 0x04 =         10
+Data Memory: 0x08 =          0
+Data Memory: 0x0c =          0
+Data Memory: 0x10 =          0
+Data Memory: 0x14 =          0
+Data Memory: 0x18 =          0
+Data Memory: 0x1c =          0
+
+
+cycle =          13, Start = 1, Stall =           0, Flush =           0
+PC =         48
+
+nxt_PC1 =         52, branch_PC =         44, nxt_PC =         52, PC_select
+0
+instruction =          0, ID-instruction =          0
+
+rs1 =  0, rs2 =  0, rd =  0
+
+IDIimm =          0, IDSimm =          0, IDBimm =    0, IDimm_val =          0
+
+RS1data =          0, RS2data =          0, ALUSrc = 1
+
+val1 =          0, val2 =          0, res =          0, rs2 =          0
+
+IFflush = 0, IFstall = 0, ID_EQ = 1
+
+MuxIn =  3, EXnop = 0, MuxOut =  3
+
+WBWB = 1, WBrd =  0, WBdata =          0, WB_ALUres =          0
+
+Mem = 1, MEM_WBSrc = 1
+
+IDrd =  0, EXrd =  0, MEMrd =  0, WBrd =  0
+
+EXval1 =          0, MemForward1 =          0, ALUForward1 =          0, select1 = 0, select2 = 0
+
+Registers
+x0 =          0, x8  =          0, x16 =          0, x24 =          0
+x1 =          0, x9  =          0, x17 =          0, x25 =          0
+x2 =          0, x10 =          0, x18 =          0, x26 =          0
+x3 =          0, x11 =          0, x19 =          0, x27 =          0
+x4 =          0, x12 =          0, x20 =          0, x28 =        100
+x5 =          0, x13 =          0, x21 =          0, x29 =          0
+x6 =         10, x14 =          0, x22 =          0, x30 =         10
+x7 =         13, x15 =          0, x23 =          0, x31 =         20
+Data Memory: 0x00 =          0
+Data Memory: 0x04 =         10
+Data Memory: 0x08 =          0
+Data Memory: 0x0c =          0
+Data Memory: 0x10 =          0
+Data Memory: 0x14 =          0
+Data Memory: 0x18 =          0
+Data Memory: 0x1c =          0
+
+
+cycle =          14, Start = 1, Stall =           0, Flush =           0
+PC =         52
+
+nxt_PC1 =         56, branch_PC =         48, nxt_PC =         56, PC_select
+0
+instruction =          0, ID-instruction =          0
+
+rs1 =  0, rs2 =  0, rd =  0
+
+IDIimm =          0, IDSimm =          0, IDBimm =    0, IDimm_val =          0
+
+RS1data =          0, RS2data =          0, ALUSrc = 1
+
+val1 =          0, val2 =          0, res =          0, rs2 =          0
+
+IFflush = 0, IFstall = 0, ID_EQ = 1
+
+MuxIn =  3, EXnop = 0, MuxOut =  3
+
+WBWB = 1, WBrd =  0, WBdata =          0, WB_ALUres =          0
+
+Mem = 1, MEM_WBSrc = 1
+
+IDrd =  0, EXrd =  0, MEMrd =  0, WBrd =  0
+
+EXval1 =          0, MemForward1 =          0, ALUForward1 =          0, select1 = 0, select2 = 0
+
+Registers
+x0 =          0, x8  =          0, x16 =          0, x24 =          0
+x1 =          0, x9  =          0, x17 =          0, x25 =          0
+x2 =          0, x10 =          0, x18 =          0, x26 =          0
+x3 =          0, x11 =          0, x19 =          0, x27 =          0
+x4 =          0, x12 =          0, x20 =          0, x28 =        100
+x5 =          0, x13 =          0, x21 =          0, x29 =          0
+x6 =         10, x14 =          0, x22 =          0, x30 =         10
+x7 =         13, x15 =          0, x23 =          0, x31 =         20
+Data Memory: 0x00 =          0
+Data Memory: 0x04 =         10
+Data Memory: 0x08 =          0
 Data Memory: 0x0c =          0
 Data Memory: 0x10 =          0
 Data Memory: 0x14 =          0
