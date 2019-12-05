@@ -16,6 +16,10 @@ module MEMWB(clk_i,WB_i,MemRdata_i,ALUres_i,rd_addr_i,WBSrc_i,WB_o,MemRdata_o,AL
     reg [4:0] tmp_rd_addr_o;
     reg tmp_WB_o,tmp_WBSrc_o;
 
+    initial begin
+        {tmp_MemRdata_o,tmp_ALUres_o,tmp_rd_addr_o,tmp_WB_o,tmp_WBSrc_o} <= 0;
+    end
+
     assign WB_o = tmp_WB_o;
     assign MemRdata_o = tmp_MemRdata_o;
     assign ALUres_o = tmp_ALUres_o;
@@ -29,7 +33,7 @@ module MEMWB(clk_i,WB_i,MemRdata_i,ALUres_i,rd_addr_i,WBSrc_i,WB_o,MemRdata_o,AL
         tmp_rd_addr_o <= rd_addr_i;
         tmp_WBSrc_o <= WBSrc_i;
     end
-    
+
 
 
 endmodule

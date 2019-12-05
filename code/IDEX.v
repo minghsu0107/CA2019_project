@@ -13,12 +13,16 @@ module IDEX(clk_i,rs1_data,rs2_data,Iimm,Simm,rs1_addr,rs2_addr,rd_addr,funct3,f
 
     reg [3:0] tmp;
     reg [9:0] funct;
-    
+
     reg [31:0] tmp_val1,tmp_val2,tmp_Simm_o;
     reg [3:0] tmp_ALUCtrl;
     reg [4:0] tmp_rs1_addr_o,tmp_rs2_addr_o,tmp_rd_addr_o;
     reg [1:0] tmp_Mem_o;
     reg tmp_WB_o;
+
+    initial begin
+        {tmp_val1,tmp_val2,tmp_Simm_o,tmp_ALUCtrl,tmp_rs1_addr_o,tmp_rs2_addr_o,tmp_rd_addr_o,tmp_Mem_o,tmp_WB_o} <= 0;
+    end
 
     assign val1 = tmp_val1;
     assign val2 = tmp_val2;
