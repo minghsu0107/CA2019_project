@@ -82,6 +82,7 @@ always@(posedge Clk) begin
     $fdisplay(outfile, "MuxIn = %d, EXnop = %d, MuxOut = %d\n",CPU.MuxIn,CPU.EXnop,CPU.MuxOut);
     $fdisplay(outfile, "WBWB = %d, WBrd = %d, WBdata = %d, WB_ALUres = %d\n",CPU.IDWB,CPU.WBrd,CPU.WBdata,CPU.WB_ALUres);
     $fdisplay(outfile, "Mem = %d, MEM_WBSrc = %d\n",CPU.Mem,CPU.MEM_WBSrc);
+    $fdisplay(outfile, "IDrd = %d, EXrd = %d, MEMrd = %d, WBrd = %d\n",CPU.IDrd,CPU.EXrd,CPU.MEMrd,CPU.WBrd);
 
     // print Registers
     $fdisplay(outfile, "Registers");
