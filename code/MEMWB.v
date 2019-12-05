@@ -23,11 +23,11 @@ module MEMWB(clk_i,WB_i,MemRdata_i,ALUres_i,rd_addr_i,WBSrc_i,WB_o,MemRdata_o,AL
     assign WBSrc_o = tmp_WBSrc_o;
 
     always @ ( posedge clk_i ) begin
-        tmp_WB_o = WB_i;
-        tmp_MemRdata_o = MemRdata_i;
-        tmp_ALUres_o = ALUres_i;
-        tmp_rd_addr_o = rd_addr_i;
-        tmp_WBSrc_o = WBSrc_i;
+        tmp_WB_o <= WB_i;
+        tmp_MemRdata_o <= MemRdata_i;
+        tmp_ALUres_o <= ALUres_i;
+        tmp_rd_addr_o <= rd_addr_i;
+        tmp_WBSrc_o <= WBSrc_i;
     end
     
 

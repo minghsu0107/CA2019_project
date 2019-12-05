@@ -41,11 +41,11 @@ Data Memory: 0x1c =          0
 cycle =           1, Start = 1, Stall =           0, Flush =           0
 PC =          4
 
-nxt_PC1 =          8, branch_PC =         10, nxt_PC =          8, PC_select
+nxt_PC1 =          8, branch_PC =          6, nxt_PC =          8, PC_select
 0
-instruction =          0, ID-instruction =          0
+instruction =          0, ID-instruction =   10486547
 
-rs1 =  0, rs2 = 10, rd =  6
+rs1 =  0, rs2 = 10, rd =  x
 
 val1 =          x, val2 =          x, res =          x
 
@@ -53,11 +53,11 @@ IFflush = 0, IFstall = 0, ID_EQ = x
 
 MuxIn = 17, EXnop = 0, MuxOut = 17
 
-WBWB = 1, WBrd =  6, WBdata =          x, WB_ALUres =          x
+WBWB = 1, WBrd =  x, WBdata =          x, WB_ALUres =          x
 
-Mem = 0, MEM_WBSrc = x
+Mem = x, MEM_WBSrc = x
 
-IDrd =  6, EXrd =  6, MEMrd =  6, WBrd =  6
+IDrd =  6, EXrd =  x, MEMrd =  x, WBrd =  x
 
 Registers
 x0 =          0, x8  =          0, x16 =          0, x24 =          0
@@ -85,19 +85,19 @@ nxt_PC1 =         12, branch_PC =          4, nxt_PC =         12, PC_select
 0
 instruction =          0, ID-instruction =          0
 
-rs1 =  0, rs2 =  0, rd =  6
+rs1 =  0, rs2 =  0, rd =  x
 
 val1 =          x, val2 =         10, res =          x
 
-IFflush = 0, IFstall = 0, ID_EQ = 1
+IFflush = 0, IFstall = 0, ID_EQ = x
 
 MuxIn =  3, EXnop = 0, MuxOut =  3
 
-WBWB = 1, WBrd =  6, WBdata =          x, WB_ALUres =          x
+WBWB = 1, WBrd =  x, WBdata =          x, WB_ALUres =          x
 
-Mem = 0, MEM_WBSrc = 0
+Mem = x, MEM_WBSrc = x
 
-IDrd =  0, EXrd =  6, MEMrd =  6, WBrd =  6
+IDrd =  0, EXrd =  6, MEMrd =  x, WBrd =  x
 
 Registers
 x0 =          0, x8  =          0, x16 =          0, x24 =          0
@@ -125,19 +125,19 @@ nxt_PC1 =         16, branch_PC =          8, nxt_PC =         16, PC_select
 0
 instruction =          0, ID-instruction =          0
 
-rs1 =  0, rs2 =  0, rd =  0
+rs1 =  0, rs2 =  0, rd =  x
 
-val1 =          0, val2 =          0, res =          0
+val1 =          x, val2 =          0, res =          x
 
-IFflush = 0, IFstall = 1, ID_EQ = 1
+IFflush = 0, IFstall = 1, ID_EQ = x
 
 MuxIn =  3, EXnop = 1, MuxOut =  0
 
-WBWB = 0, WBrd =  0, WBdata =          x, WB_ALUres =          0
+WBWB = 0, WBrd =  x, WBdata =          x, WB_ALUres =          x
 
-Mem = 0, MEM_WBSrc = x
+Mem = 0, MEM_WBSrc = 0
 
-IDrd =  0, EXrd =  0, MEMrd =  0, WBrd =  0
+IDrd =  0, EXrd =  0, MEMrd =  6, WBrd =  x
 
 Registers
 x0 =          0, x8  =          0, x16 =          0, x24 =          0
@@ -146,7 +146,7 @@ x2 =          0, x10 =          0, x18 =          0, x26 =          0
 x3 =          0, x11 =          0, x19 =          0, x27 =          0
 x4 =          0, x12 =          0, x20 =          0, x28 =          0
 x5 =          0, x13 =          0, x21 =          0, x29 =          0
-x6 =          x, x14 =          0, x22 =          0, x30 =          0
+x6 =          0, x14 =          0, x22 =          0, x30 =          0
 x7 =          0, x15 =          0, x23 =          0, x31 =          0
 Data Memory: 0x00 =          5
 Data Memory: 0x04 =          0
@@ -165,19 +165,19 @@ nxt_PC1 =         16, branch_PC =          8, nxt_PC =         16, PC_select
 0
 instruction =          0, ID-instruction =          0
 
-rs1 =  0, rs2 =  0, rd =  0
+rs1 =  0, rs2 =  0, rd =  6
 
-val1 =          0, val2 =          0, res =          0
+val1 =          x, val2 =          0, res =          x
 
 IFflush = 0, IFstall = 0, ID_EQ = 1
 
 MuxIn =  3, EXnop = 0, MuxOut =  3
 
-WBWB = 1, WBrd =  0, WBdata =          x, WB_ALUres =          0
+WBWB = 1, WBrd =  6, WBdata =          x, WB_ALUres =          x
 
-Mem = 0, MEM_WBSrc = 0
+Mem = 1, MEM_WBSrc = 1
 
-IDrd =  0, EXrd =  0, MEMrd =  0, WBrd =  0
+IDrd =  0, EXrd =  0, MEMrd =  0, WBrd =  6
 
 Registers
 x0 =          0, x8  =          0, x16 =          0, x24 =          0
@@ -186,7 +186,7 @@ x2 =          0, x10 =          0, x18 =          0, x26 =          0
 x3 =          0, x11 =          0, x19 =          0, x27 =          0
 x4 =          0, x12 =          0, x20 =          0, x28 =          0
 x5 =          0, x13 =          0, x21 =          0, x29 =          0
-x6 =          x, x14 =          0, x22 =          0, x30 =          0
+x6 =          0, x14 =          0, x22 =          0, x30 =          0
 x7 =          0, x15 =          0, x23 =          0, x31 =          0
 Data Memory: 0x00 =          5
 Data Memory: 0x04 =          0
@@ -213,9 +213,9 @@ IFflush = 0, IFstall = 1, ID_EQ = 1
 
 MuxIn =  3, EXnop = 1, MuxOut =  0
 
-WBWB = 0, WBrd =  0, WBdata =          0, WB_ALUres =          0
+WBWB = 0, WBrd =  0, WBdata =          x, WB_ALUres =          x
 
-Mem = 0, MEM_WBSrc = x
+Mem = 0, MEM_WBSrc = 0
 
 IDrd =  0, EXrd =  0, MEMrd =  0, WBrd =  0
 
@@ -253,9 +253,9 @@ IFflush = 0, IFstall = 0, ID_EQ = 1
 
 MuxIn =  3, EXnop = 0, MuxOut =  3
 
-WBWB = 1, WBrd =  0, WBdata =          X, WB_ALUres =          0
+WBWB = 1, WBrd =  0, WBdata =          x, WB_ALUres =          x
 
-Mem = 0, MEM_WBSrc = 0
+Mem = 1, MEM_WBSrc = 1
 
 IDrd =  0, EXrd =  0, MEMrd =  0, WBrd =  0
 
@@ -293,9 +293,9 @@ IFflush = 0, IFstall = 1, ID_EQ = 1
 
 MuxIn =  3, EXnop = 1, MuxOut =  0
 
-WBWB = 0, WBrd =  0, WBdata =          0, WB_ALUres =          0
+WBWB = 0, WBrd =  0, WBdata =          5, WB_ALUres =          0
 
-Mem = 0, MEM_WBSrc = x
+Mem = 0, MEM_WBSrc = 0
 
 IDrd =  0, EXrd =  0, MEMrd =  0, WBrd =  0
 

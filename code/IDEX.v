@@ -31,15 +31,15 @@ module IDEX(clk_i,rs1_data,rs2_data,Iimm,Simm,rs1_addr,rs2_addr,rd_addr,funct3,f
     assign ALUCtrl = tmp_ALUCtrl;
 
     always @ ( posedge clk_i ) begin
-        tmp_val1 = rs1_data;
-        tmp_val2 = ( ALUSrc ? Iimm : rs2_data );
-        tmp_Simm_o = Simm;
-        tmp_rs1_addr_o = rs1_addr;
-        tmp_rs2_addr_o = rs2_addr;
-        tmp_rd_addr_o = rd_addr;
-        tmp_Mem_o = Mem;
-        tmp_WB_o = WB;
-        tmp_ALUCtrl = tmp;
+        tmp_val1 <= rs1_data;
+        tmp_val2 <= ( ALUSrc ? Iimm : rs2_data );
+        tmp_Simm_o <= Simm;
+        tmp_rs1_addr_o <= rs1_addr;
+        tmp_rs2_addr_o <= rs2_addr;
+        tmp_rd_addr_o <= rd_addr;
+        tmp_Mem_o <= Mem;
+        tmp_WB_o <= WB;
+        tmp_ALUCtrl <= tmp;
     end
     /*
     assign val1 = rs1_data;
