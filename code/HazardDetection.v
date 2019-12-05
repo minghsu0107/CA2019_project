@@ -8,7 +8,7 @@ always @ ( * ) begin
     {IFIDStall_o, IFIDFlush_o, Mux_o} <= 0;
     PCWrite_o = 1'b1;
 
-    if (MemRead_IDEX && (rd_IDEX == rs1_IFID || rd_IDEX == rs2_IFID)) begin // stall
+    if (MemRead_IDEX && rd_IDEX != 0 && (rd_IDEX == rs1_IFID || rd_IDEX == rs2_IFID)) begin // stall
         PCWrite_o <= 1'b0;
         IFIDStall_o <= 1'b1;
         IFIDFlush_o <= 1'b0;
