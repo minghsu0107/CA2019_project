@@ -66,8 +66,8 @@ always@(posedge Clk) begin
         $finish;
 
     // TODO: put in your own signal to count stall and flush
-     if(CPU.IFstall_o == 1 && CPU.Control. == 0)stall = stall + 1;
-     if(CPU.IFflush_o == 1)flush = flush + 1;
+     if(CPU.HD.IFIDStall_o == 1'b1 && CPU.HD.isBranch == 1'b0)stall = stall + 1;
+     if(CPU.HD.IFIDFlush_o == 1'b1)flush = flush + 1;
 
 
     // print PC
