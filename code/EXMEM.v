@@ -30,7 +30,7 @@ module EXMEM(clk_i,WB_i,Mem_i,ALUres_i,imm_i,rs1_data_i,rs2_data_i,rd_addr_i,Mem
         tmp_rd_addr_o <= rd_addr_i;
         tmp_Memdata_o <= rs2_data_i;
         tmp_ALUres_o <= ALUres_i;
-        tmp_Memaddr_o <= (Mem_i == 2'b01 ? rs1_data_i + rs2_data_i : rs1_data_i + imm_i);
+        tmp_Memaddr_o <= ALUres_i;
     end
 
 endmodule
