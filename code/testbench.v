@@ -17,6 +17,8 @@ CPU CPU(
 );
 
 initial begin
+    $dumpfile("ans.vcd");
+    $dumpvars;
     counter = 0;
     stall = 0;
     flush = 0;
@@ -74,12 +76,12 @@ always@(posedge Clk) begin
     $fdisplay(outfile, "nxt_PC1 = %d, branch_PC = %d, nxt_PC = %d, PC_select\n",CPU.nxt_PC1,CPU.branch_PC,CPU.nxt_PC,CPU.PC_select);
     $fdisplay(outfile, "instruction = %d, ID-instruction = %d\n",CPU.instr,CPU.ID_instr);
     $fdisplay(outfile, "rs1 = %d, rs2 = %d, rd = %d\n",CPU.RS1addr,CPU.RS2addr,CPU.RDaddr);
+    $fdisplay(outfile, "RS1data = %d, IDrs1_data = %d, EXval1 = %d\n", CPU.RS1data, CPU.IDrs1_data,CPU.EXval1);
     $fdisplay(outfile, "val1 = %d, val2 = %d, res = %d\n",CPU.Src1,CPU.Src2,CPU.ALUans);
     $fdisplay(outfile, "IFflush = %d, IFstall = %d, ID_EQ = %d\n",CPU.IFflush,CPU.IFstall,CPU.ID_EQ);
     $fdisplay(outfile, "MuxIn = %d, EXnop = %d, MuxOut = %d\n",CPU.MuxIn,CPU.EXnop,CPU.MuxOut);
     $fdisplay(outfile, "WBWB = %d, WBrd = %d, WBdata = %d, WB_ALUres = %d\n",CPU.IDWB,CPU.WBrd,CPU.WBdata,CPU.WB_ALUres);
     $fdisplay(outfile, "Mem = %d, MEM_WBSrc = %d\n",CPU.Mem,CPU.MEM_WBSrc);
-    $fdisplay(outfile, "IDrd = %d, EXrd = %d, MEMrd = %d, WBrd = %d\n",CPU.IDrd,CPU.EXrd,CPU.MEMrd,CPU.WBrd);
 
     // print Registers
     $fdisplay(outfile, "Registers");

@@ -7,6 +7,8 @@ instruction =   10486547, ID-instruction =          x
 
 rs1 =  x, rs2 =  x, rd =  x
 
+RS1data =          x, IDrs1_data =          x, EXval1 =          x
+
 val1 =          x, val2 =          x, res =          x
 
 IFflush = 0, IFstall = 0, ID_EQ = x
@@ -16,8 +18,6 @@ MuxIn =  x, EXnop = 0, MuxOut =  x
 WBWB = x, WBrd =  x, WBdata =          x, WB_ALUres =          x
 
 Mem = x, MEM_WBSrc = x
-
-IDrd =  x, EXrd =  x, MEMrd =  x, WBrd =  x
 
 Registers
 x0 =          0, x8  =          0, x16 =          0, x24 =          0
@@ -47,6 +47,8 @@ instruction =          0, ID-instruction =   10486547
 
 rs1 =  0, rs2 = 10, rd =  x
 
+RS1data =          x, IDrs1_data =          x, EXval1 =          x
+
 val1 =          x, val2 =          x, res =          x
 
 IFflush = 0, IFstall = 0, ID_EQ = x
@@ -56,8 +58,6 @@ MuxIn = 17, EXnop = 0, MuxOut = 17
 WBWB = 1, WBrd =  x, WBdata =          x, WB_ALUres =          x
 
 Mem = x, MEM_WBSrc = x
-
-IDrd =  6, EXrd =  x, MEMrd =  x, WBrd =  x
 
 Registers
 x0 =          0, x8  =          0, x16 =          0, x24 =          0
@@ -87,6 +87,8 @@ instruction =          0, ID-instruction =          0
 
 rs1 =  0, rs2 =  0, rd =  x
 
+RS1data =          x, IDrs1_data =          x, EXval1 =          x
+
 val1 =          x, val2 =         10, res =          x
 
 IFflush = 0, IFstall = 0, ID_EQ = x
@@ -96,8 +98,6 @@ MuxIn =  3, EXnop = 0, MuxOut =  3
 WBWB = 1, WBrd =  x, WBdata =          x, WB_ALUres =          x
 
 Mem = x, MEM_WBSrc = x
-
-IDrd =  0, EXrd =  6, MEMrd =  x, WBrd =  x
 
 Registers
 x0 =          0, x8  =          0, x16 =          0, x24 =          0
@@ -127,6 +127,8 @@ instruction =          0, ID-instruction =          0
 
 rs1 =  0, rs2 =  0, rd =  x
 
+RS1data =          x, IDrs1_data =          x, EXval1 =          x
+
 val1 =          x, val2 =          0, res =          x
 
 IFflush = 0, IFstall = 1, ID_EQ = x
@@ -136,8 +138,6 @@ MuxIn =  3, EXnop = 1, MuxOut =  0
 WBWB = 0, WBrd =  x, WBdata =          x, WB_ALUres =          x
 
 Mem = 0, MEM_WBSrc = 0
-
-IDrd =  0, EXrd =  0, MEMrd =  6, WBrd =  x
 
 Registers
 x0 =          0, x8  =          0, x16 =          0, x24 =          0
@@ -167,6 +167,8 @@ instruction =          0, ID-instruction =          0
 
 rs1 =  0, rs2 =  0, rd =  6
 
+RS1data =          0, IDrs1_data =          0, EXval1 =          x
+
 val1 =          x, val2 =          0, res =          x
 
 IFflush = 0, IFstall = 0, ID_EQ = 1
@@ -176,8 +178,6 @@ MuxIn =  3, EXnop = 0, MuxOut =  3
 WBWB = 1, WBrd =  6, WBdata =          x, WB_ALUres =          x
 
 Mem = 1, MEM_WBSrc = 1
-
-IDrd =  0, EXrd =  0, MEMrd =  0, WBrd =  6
 
 Registers
 x0 =          0, x8  =          0, x16 =          0, x24 =          0
@@ -207,6 +207,8 @@ instruction =          0, ID-instruction =          0
 
 rs1 =  0, rs2 =  0, rd =  0
 
+RS1data =          0, IDrs1_data =          0, EXval1 =          0
+
 val1 =          0, val2 =          0, res =          0
 
 IFflush = 0, IFstall = 1, ID_EQ = 1
@@ -216,8 +218,6 @@ MuxIn =  3, EXnop = 1, MuxOut =  0
 WBWB = 0, WBrd =  0, WBdata =          x, WB_ALUres =          x
 
 Mem = 0, MEM_WBSrc = 0
-
-IDrd =  0, EXrd =  0, MEMrd =  0, WBrd =  0
 
 Registers
 x0 =          0, x8  =          0, x16 =          0, x24 =          0
@@ -247,6 +247,8 @@ instruction =          0, ID-instruction =          0
 
 rs1 =  0, rs2 =  0, rd =  0
 
+RS1data =          0, IDrs1_data =          0, EXval1 =          0
+
 val1 =          0, val2 =          0, res =          0
 
 IFflush = 0, IFstall = 0, ID_EQ = 1
@@ -256,8 +258,6 @@ MuxIn =  3, EXnop = 0, MuxOut =  3
 WBWB = 1, WBrd =  0, WBdata =          x, WB_ALUres =          x
 
 Mem = 1, MEM_WBSrc = 1
-
-IDrd =  0, EXrd =  0, MEMrd =  0, WBrd =  0
 
 Registers
 x0 =          0, x8  =          0, x16 =          0, x24 =          0
@@ -287,6 +287,8 @@ instruction =          0, ID-instruction =          0
 
 rs1 =  0, rs2 =  0, rd =  0
 
+RS1data =          0, IDrs1_data =          0, EXval1 =          0
+
 val1 =          0, val2 =          0, res =          0
 
 IFflush = 0, IFstall = 1, ID_EQ = 1
@@ -296,8 +298,6 @@ MuxIn =  3, EXnop = 1, MuxOut =  0
 WBWB = 0, WBrd =  0, WBdata =          5, WB_ALUres =          0
 
 Mem = 0, MEM_WBSrc = 0
-
-IDrd =  0, EXrd =  0, MEMrd =  0, WBrd =  0
 
 Registers
 x0 =          0, x8  =          0, x16 =          0, x24 =          0
