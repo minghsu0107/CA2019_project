@@ -15,14 +15,14 @@ wire PCWrite,PC_select;
 
 Adder Add_PC(
     .data1_i (cur_PC),
-    .data2_i (13'b100),
+    .data2_i (32'b100),
     .data_o (nxt_PC1)
 );
 
 MUX PC_MUX(
     .data1_i (nxt_PC1),
     .data2_i (branch_PC),
-    .select_i (1'b0),
+    .select_i (PC_select),
     .data_o (nxt_PC)
 );
 
@@ -86,21 +86,19 @@ IFID IFID(
 wire [6:0] IDfunct7,IDopcode;
 wire [4:0] IDrs1,IDrs2,IDrd;
 wire [2:0] IDfunct3;
-wire [11:0] IDIimm,IDSimm1;
-wire [12:0] IDBimm;
-wire [31:0] IDSimm;
+wire [11:0] IDIimm1,IDSimm1,IDBimm1;
+wire [31:0] IDIimm,IDSimm,IDBimm2,IDBimm;
 assign IDfunct7 = ID_instr[31:25];
 assign IDfunct3 = ID_instr[14:12];
 assign IDopcode = ID_instr[6:0];
 assign IDrs1 = ID_instr[19:15];
 assign IDrs2 = ID_instr[24:20];
 assign IDrd = ID_instr[11:7];
-assign IDIimm = ID_instr[31:20];
+assign IDIimm1 = ID_instr[31:20];
 assign IDSimm1[11:5] = ID_instr[31:25];
 assign IDSimm1[4:0] = ID_instr[11:7];
-assign {IDBimm[12],IDBimm[10:5]} = ID_instr[31:25];
-assign {IDBimm[4:1],IDBimm[11]} = ID_instr[11:7];
-assign IDBimm[0] = 1'b0;
+assign {IDBimm1[11],IDBimm1[9:4]} = ID_instr[31:25];
+assign {IDBimm1[3:0],IDBimm1[10]} = ID_instr[11:7];
 
 assign RS1addr = IDrs1;
 assign RS2addr = IDrs2;
@@ -119,14 +117,24 @@ EQUAL EQUAL(
 assign PC_select = ID_EQ & IDopcode[6];
 
 SignExtend SignExtendI(
-    .data_i (IDIimm),
-    .data_o (IDimm_val)
+    .data_i (IDIimm1),
+    .data_o (IDIimm)
 );
 
 SignExtend SignExtendS(
     .data_i (IDSimm1),
     .data_o (IDSimm)
 );
+
+SignExtend SignExtendB(
+    .data_i (IDBimm1),
+    .data_o (IDBimm2)
+);
+
+assign IDBimm[31:1] = IDBimm2[30:0];
+assign IDBimm[0] = 1'b0;
+
+assign IDimm_val = ( IDopcode[5] ? IDSimm : IDIimm );
 
 Adder Adder(
     .data1_i (ID_PC),
@@ -166,14 +174,13 @@ wire [31:0] EXval1,EXval2,EXimm;
 wire [3:0] ALUCtrl;
 wire [4:0] EXrs1,EXrs2,EXrd;
 wire [1:0] EXMem;
-wire EXWB;
+wire EXWB,EX_ALUSrc;
 
 IDEX IDEX(
     .clk_i (clk_i),
     .rs1_data (IDrs1_data),
     .rs2_data (IDrs2_data),
     .Iimm (IDimm_val),
-    .Simm (IDSimm),
     .rs1_addr (IDrs1),
     .rs2_addr (IDrs2),
     .rd_addr (IDrd),
@@ -185,16 +192,17 @@ IDEX IDEX(
     .ALUSrc (ALUSrc),
     .val1 (EXval1),
     .val2 (EXval2),
+    .imm (EXimm),
     .ALUCtrl (ALUCtrl),
     .rs1_addr_o (EXrs1),
     .rs2_addr_o (EXrs2),
     .rd_addr_o (EXrd),
-    .Simm_o (EXimm),
     .Mem_o (EXMem),
-    .WB_o (EXWB)
+    .WB_o (EXWB),
+    .ALUSrc_o (EX_ALUSrc)
 );
 
-wire [31:0] MemForward1,MemForward2,ALUForward1,ALUForward2,Src1,Src2;
+wire [31:0] MemForward1,MemForward2,ALUForward1,ALUForward2,Src1,Src2,EX_rs2_data;
 wire [1:0] select1,select2;
 
 ALU_MUX ALU_SRC1(
@@ -210,8 +218,10 @@ ALU_MUX ALU_SRC2(
     .data2_i (MemForward2),
     .data3_i (ALUForward2),
     .select_i (select2),
-    .data_o (Src2)
+    .data_o (EX_rs2_data)
 );
+
+assign Src2 = ( EX_ALUSrc ? EXimm : EX_rs2_data );
 
 wire [31:0] ALUans;
 
@@ -234,9 +244,8 @@ EXMEM EXMEM(
     .WB_i (EXWB),
     .Mem_i (EXMem),
     .ALUres_i (ALUans),
-    .imm_i (EXimm),
     .rs1_data_i (EXval1),
-    .rs2_data_i (EXval2),
+    .rs2_data_i (EX_rs2_data),
     .rd_addr_i (EXrd),
     .Memaddr_o (Memaddr),
     .Memdata_o (Memdata),
@@ -251,6 +260,8 @@ assign DMWdata = Memdata;
 assign MemWrite = ( Mem == 2'b10 ? 1'b1 : 1'b0 );
 assign MemRdata = DMRdata;
 assign MEM_WBSrc = ( Mem == 2'b01 ? 1'b1 : 1'b0 );
+assign ALUForward1 = MEM_ALUres;
+assign ALUForward2 = MEM_ALUres;
 
 // WB stage
 
@@ -284,6 +295,8 @@ MUX WB_MUX(
 assign RDaddr = WBrd;
 assign RDdata = WBdata;
 assign RegWrite = WBWB;
+assign MemForward1 = WBdata;
+assign MemForward2 = WBdata;
 
 wire [1:0] ForwardA,ForwardB;
 
@@ -320,5 +333,6 @@ assign PCWrite = HD_PCWrite;
 assign IFflush = HDflush;
 assign IFstall = HDstall;
 assign EXnop = IFflush | IFstall;
+assign PC_select = HDflush;
 
 endmodule
