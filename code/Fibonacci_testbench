@@ -71,7 +71,7 @@ always@(posedge Clk) begin
 
 
     // print PC
-    $fdisplay(outfile, "cycle = %d, Start = %d, Stall = %d, Flush = %d\nPC = %d\n", counter, Start, stall, flush, CPU.PC.pc_o);
+    $fdisplay(outfile, "cycle = %d, Start = %0d, Stall = %0d, Flush = %0d\nPC = %d", counter, Start, stall, flush, CPU.PC.pc_o);
 
     //$fdisplay(outfile, "nxt_PC1 = %d, branch_PC = %d, nxt_PC = %d, PC_select = %d, PCWrite = %d\n",CPU.nxt_PC1,CPU.branch_PC,CPU.nxt_PC,CPU.PC_select,CPU.PCWrite);
     //$fdisplay(outfile, "instruction = %d, ID-instruction = %d\n",CPU.instr,CPU.ID_instr);
