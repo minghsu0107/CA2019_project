@@ -17,8 +17,8 @@ CPU CPU(
 );
 
 initial begin
-    $dumpfile("ans.vcd");
-    $dumpvars;
+    //$dumpfile("ans.vcd");
+    //$dumpvars;
     counter = 0;
     stall = 0;
     flush = 0;
