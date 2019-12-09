@@ -1,0 +1,127 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage{CJKutf8}
+\usepackage{amsmath}
+\usepackage{algorithm}
+\usepackage[noend]{algpseudocode}
+
+\makeatletter
+\def\BState{\State\hskip-\ALG@thistlm}
+\makeatother
+
+\title{Computer Architecture: Project \#1}
+
+\begin{CJK}{UTF8}{bsmi}
+
+\author{b07902047 羅啟帆\\ b07902139 鄭豫澤}
+\date{December 2019}
+
+\usepackage{natbib}
+\usepackage{amsmath}
+\usepackage{indentfirst}
+\usepackage{hyperref}
+\usepackage{amssymb}
+\usepackage{graphicx}
+\usepackage[a4paper, total={6.5in, 10in}]{geometry}
+
+\usepackage{listings}
+\usepackage{color}
+
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+
+\lstdefinestyle{mystyle}{
+    backgroundcolor=\color{backcolour},
+    commentstyle=\color{codegreen},
+    keywordstyle=\color{magenta},
+    numberstyle=\tiny\color{codegray},
+    stringstyle=\color{codepurple},
+    basicstyle=\footnotesize,
+    breakatwhitespace=false,
+    basicstyle=\ttfamily,
+    columns=fullflexible,
+    frame=single,
+    breaklines=true,
+    captionpos=b,
+    keepspaces=true,
+    numbers=left,
+    numbersep=5pt,
+    showspaces=false,
+    showstringspaces=false,
+    showtabs=false,
+    tabsize=4
+}
+
+\lstset{style=mystyle}
+
+
+\begin{document}
+
+\maketitle
+
+%\setcounter{secnumdepth}{0}
+
+\section{Module implementations}
+We implemented pipeline first, then plug Forwarding\_unit and HazardDetection unit in.
+
+\subsection{CPU.v}
+We put the four pipeline registers into four modules, and each stage of pipeline is implemented directly in CPU. In short, CPU is just a place for wires connecting all components together.
+
+\subsection{Pipeline registers: IFID.v, IDEX.v, EXMEM.v, MEMWB.v}
+Apart from data that needs to be passed down to the next stage, these pipeline registers are all given the clock signal (\textit{clk\_i}). They will pass data down on the rising edge of clock. Though it seems that they are easy to implement, we encountered some (time-consuming) bugs. First, we forgot to initialize them. As we assume that this CPU only reset once at the beginning, this problem is solved by add the \textit{initial} block. Second, we (mis)ued $'='$ instead of $'<='$ in \textit{always\ @\ (\ posedge\ clk\_i\ )} block. Using $'='$ will cause pipeline to malfunction.
+
+Note that we implemented the control unit in IDEX module for convenience.
+
+\subsection{Forwarding part: Forwarding\_unit.v}
+The forwarding rules are as follow:
+
+\begin{lstlisting}[language=text, caption=Rules, xleftmargin=10pt, xrightmargin=10pt, mathescape=true]
+if (RegWrite_EXMEM && rd_EXMEM != 0 && rd_EXMEM == rs1_IDEX) Forward EX result to rs1
+else if (RegWrite_MEMWB && rd_MEMWB != 0 && rd_MEMWB == rs1_IDEX) Forward MEM result to rs1
+
+if (RegWrite_EXMEM && rd_EXMEM != 0 && rd_EXMEM == rs2_IDEX) Forward EX result to rs2
+else if (RegWrite_MEMWB && rd_MEMWB != 0 && rd_MEMWB == rs2_IDEX) Forward MEM result to rs2\end{lstlisting}
+
+\subsection{Hazard dectection part: HazardDetection.v}
+The stall and flush rules are as follow:
+
+\begin{lstlisting}[language=text, caption=Rules, xleftmargin=10pt, xrightmargin=10pt, mathescape=true]
+if (MemRead_IDEX && rd_IDEX != 0 && (rd_IDEX == rs1_IFID || rd_IDEX == rs2_IFID)) : stall
+if (ID_equal && isBranch) : flush\end{lstlisting}
+
+\subsection{Adder.v}
+Just a simple Adder, read from \textit{data1\_i}, \textit{data2\_i} and put \textit{data1\_i + data2\_i} to \textit{data\_o}.
+
+\subsection{ALU\_MUX.v}
+This is a 3-to-1 multiplexer. It's used in front of the two input of ALU.
+
+\subsection{ALU.v}
+A unit for calculation. More specifically, given two numbers, it is able to perform addition(0010), subtraction(0110), bitwise and(0000), bitwise or(0001) and multiplication(1111). The binary number in parenthesis is the corresponding opcode.
+
+\subsection{Control.v}
+
+
+\subsection{CtrlMux.v}
+This is a 2-to-1 multiplexer used is ID stage. The difference between this and MUX is the size of input data. The data size for CtrlMux 5 bits, while the data size for MUX is 32 bits.
+
+\subsection{EQUAL.v}
+This module will output 1 when the two inputs of it is equal, otherwise it will output 0. This is used for getting the result of command \textit{beq} earlier.
+
+\subsection{MUX.v}
+This is a 2-to-1 multiplexer with data size of 32 bits used at both WB and IF stage.
+
+\subsection{SignExtend.v}
+This module sign extends the input from 12 bits to 32 bits.
+
+\section{Work division}
+\begin{enumerate}
+    \item Basic pipeline (CPU): b07902139
+    \item Data forwarding \& hazard dectection: b07902047
+    \item xReport: b07902047 \& b07902139
+\end{enumerate}
+
+\end{document}
+
+\end{CJK}
