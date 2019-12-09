@@ -72,7 +72,7 @@ We put the four pipeline registers into four modules, and each stage of pipeline
 \subsection{Pipeline registers: IFID.v, IDEX.v, EXMEM.v, MEMWB.v}
 Apart from data that needs to be passed down to the next stage, these pipeline registers are all given the clock signal (\textit{clk\_i}). They will pass data down on the rising edge of clock. Though it seems that they are easy to implement, we encountered some (time-consuming) bugs. First, we forgot to initialize them. As we assume that this CPU only reset once at the beginning, this problem is solved by add the \textit{initial} block. Second, we (mis)ued $'='$ instead of $'<='$ in \textit{always\ @\ (\ posedge\ clk\_i\ )} block. Using $'='$ will cause pipeline to malfunction.
 
-Note that we implemented the control unit in IDEX module for convenience.
+Note that we implemented the ALU control unit in IDEX module for convenience.
 
 \subsection{Forwarding part: Forwarding\_unit.v}
 The forwarding rules are as follow:
@@ -101,7 +101,7 @@ This is a 3-to-1 multiplexer. It's used in front of the two input of ALU.
 A unit for calculation. More specifically, given two numbers, it is able to perform addition(0010), subtraction(0110), bitwise and(0000), bitwise or(0001) and multiplication(1111). The binary number in parenthesis is the corresponding opcode.
 
 \subsection{Control.v}
-
+This unit parse the instructions into several control signals for different units.
 
 \subsection{CtrlMux.v}
 This is a 2-to-1 multiplexer used is ID stage. The difference between this and MUX is the size of input data. The data size for CtrlMux 5 bits, while the data size for MUX is 32 bits.
@@ -117,9 +117,9 @@ This module sign extends the input from 12 bits to 32 bits.
 
 \section{Work division}
 \begin{enumerate}
-    \item Basic pipeline (CPU): b07902139
+    \item Basic pipeline: b07902139
     \item Data forwarding \& hazard dectection: b07902047
-    \item xReport: b07902047 \& b07902139
+    \item Report: b07902047 \& b07902139
 \end{enumerate}
 
 \end{document}
