@@ -184,6 +184,7 @@ IDEX IDEX(
     .rs1_addr (IDrs1),
     .rs2_addr (IDrs2),
     .rd_addr (IDrd),
+    .opcode (IDopcode),
     .funct3 (IDfunct3),
     .funct7 (IDfunct7),
     .WB (IDWB),

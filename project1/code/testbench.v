@@ -39,10 +39,10 @@ initial begin
     // TODO: initialize pipeline registers
 
     // Load instructions into instruction memory
-    $readmemb("../testdata/instruction.txt", CPU.Instruction_Memory.memory);
+    $readmemb("../testdata/instruction_4.txt", CPU.Instruction_Memory.memory);
 
     // Open output file
-    outfile = $fopen("../testdata/output.txt") | 1;
+    outfile = $fopen("../testdata/my_4.txt") | 1;
 
     // Set Input n into data memory at 0x00
     CPU.Data_Memory.memory[0] = 8'h5;       // n = 5 for example
@@ -60,7 +60,7 @@ end
 
 always@(posedge Clk) begin
     // TODO: change # of cycles as you need
-    if(counter == 30)    // stop after 30 cycles
+    if(counter == 64)    // stop after 30 cycles
         $finish;
 
     // TODO: put in your own signal to count stall and flush
@@ -77,7 +77,7 @@ always@(posedge Clk) begin
     //$fdisplay(outfile, "IDIimm = %d, IDSimm = %d, IDBimm = %d, IDimm_val = %d\n",CPU.IDIimm,CPU.IDSimm,CPU.IDBimm,CPU.IDimm_val);
     //$fdisplay(outfile, "ID_EQ = %d, isBranch = %d, HDstall = %d, HDflush = %d\n",CPU.ID_EQ,CPU.HD.isBranch,CPU.HDstall,CPU.HDflush);
     //$fdisplay(outfile, "RS1data = %d, RS2data = %d, ALUSrc = %d\n",CPU.IDrs1_data,CPU.IDrs2_data,CPU.ALUSrc);
-    //$fdisplay(outfile, "val1 = %d, val2 = %d, res = %d, rs2 = %d\n",CPU.Src1,CPU.Src2,CPU.ALUans,CPU.EX_rs2_data);
+    //$fdisplay(outfile, "val1 = %d, val2 = %d, ALUCtrl = %d, res = %d, rs2 = %d\n",CPU.Src1,CPU.Src2,CPU.ALUCtrl,CPU.ALUans,CPU.EX_rs2_data);
     //$fdisplay(outfile, "IFflush = %d, IFstall = %d, ID_EQ = %d\n",CPU.IFflush,CPU.IFstall,CPU.ID_EQ);
     //$fdisplay(outfile, "MuxIn = %d, EXnop = %d, MuxOut = %d\n",CPU.MuxIn,CPU.EXnop,CPU.MuxOut);
     //$fdisplay(outfile, "WBWB = %d, WBrd = %d, WBdata = %d, WB_ALUres = %d\n",CPU.IDWB,CPU.WBrd,CPU.WBdata,CPU.WB_ALUres);
