@@ -27,7 +27,101 @@ output	[32-1:0]	mem_addr_o;
 output				mem_enable_o;
 output				mem_write_o;
 
-//data cache
+//
+// add your project1 here!
+//
+wire [31:0] cur_PC,nxt_PC1,branch_PC,nxt_PC;
+wire PCWrite,PC_select;
+
+Adder Add_PC(
+    .data1_i (cur_PC),
+    .data2_i (32'b100),
+    .data_o (nxt_PC1)
+);
+
+MUX PC_MUX(
+    .data1_i (nxt_PC1),
+    .data2_i (branch_PC),
+    .select_i (PC_select),
+    .data_o (nxt_PC)
+);
+/*
+PC PC(
+    .clk_i          (clk_i),
+    .start_i        (start_i),
+    .rst_i          (rst_i),
+    .PCWrite_i      (PCWrite),
+    .pc_i           (nxt_PC),
+    .pc_o           (cur_PC)
+);
+*/
+// p2
+PC PC
+(
+	.clk_i(clk_i),
+	.rst_i(rst_i),
+	.start_i(start_i),
+	.stall_i(),
+	.PCWrite_i(),
+	.pc_i(),
+	.pc_o()
+);
+// p2 end
+
+wire [31:0] instr;
+/*
+Instruction_Memory Instruction_Memory(
+    .addr_i         (cur_PC),
+    .instr_o        (instr)
+);
+*/
+// p2
+Instruction_Memory Instruction_Memory(
+	.addr_i(),
+	.instr_o()
+);
+// p2 end
+
+wire [4:0] RS1addr,RS2addr,RDaddr;
+wire [31:0] RS1data,RS2data,RDdata;
+wire RegWrite;
+/*
+Registers Registers(
+    .clk_i          (clk_i),
+    .RS1addr_i      (RS1addr),
+    .RS2addr_i      (RS2addr),
+    .RDaddr_i       (RDaddr),
+    .RDdata_i       (RDdata),
+    .RegWrite_i     (RegWrite),
+    .RS1data_o      (RS1data),
+    .RS2data_o      (RS2data)
+);
+*/
+// p2
+Registers Registers(
+	.clk_i(clk_i),
+	.RS1addr_i(),
+	.RS2addr_i(),
+	.RDaddr_i(),
+	.RDdata_i(),
+	.RegWrite_i(),
+	.RS1data_o(),
+	.RS2data_o()
+);
+// p2 end
+
+wire [31:0] DMaddr,DMRdata,DMWdata;
+wire MemWrite;
+
+Data_Memory Data_Memory(
+    .clk_i          (clk_i),
+    .addr_i         (DMaddr),
+    .MemWrite_i     (MemWrite),
+    .data_i         (DMWdata),
+    .data_o         (DMRdata)
+);
+// p2
+// data cache
 dcache_top dcache
 (
     // System clock, reset and stall
@@ -50,67 +144,7 @@ dcache_top dcache
 	.p1_data_o(),
 	.p1_stall_o()
 );
-
-//
-// add your project1 here!
-//
-wire [31:0] cur_PC,nxt_PC1,branch_PC,nxt_PC;
-wire PCWrite,PC_select;
-
-Adder Add_PC(
-    .data1_i (cur_PC),
-    .data2_i (32'b100),
-    .data_o (nxt_PC1)
-);
-
-MUX PC_MUX(
-    .data1_i (nxt_PC1),
-    .data2_i (branch_PC),
-    .select_i (PC_select),
-    .data_o (nxt_PC)
-);
-
-PC PC(
-    .clk_i          (clk_i),
-    .start_i        (start_i),
-    .rst_i          (rst_i),
-    .PCWrite_i      (PCWrite),
-    .pc_i           (nxt_PC),
-    .pc_o           (cur_PC)
-);
-
-wire [31:0] instr;
-
-Instruction_Memory Instruction_Memory(
-    .addr_i         (cur_PC),
-    .instr_o        (instr)
-);
-
-wire [4:0] RS1addr,RS2addr,RDaddr;
-wire [31:0] RS1data,RS2data,RDdata;
-wire RegWrite;
-
-Registers Registers(
-    .clk_i          (clk_i),
-    .RS1addr_i      (RS1addr),
-    .RS2addr_i      (RS2addr),
-    .RDaddr_i       (RDaddr),
-    .RDdata_i       (RDdata),
-    .RegWrite_i     (RegWrite),
-    .RS1data_o      (RS1data),
-    .RS2data_o      (RS2data)
-);
-
-wire [31:0] DMaddr,DMRdata,DMWdata;
-wire MemWrite;
-
-Data_Memory Data_Memory(
-    .clk_i          (clk_i),
-    .addr_i         (DMaddr),
-    .MemWrite_i     (MemWrite),
-    .data_i         (DMWdata),
-    .data_o         (DMRdata)
-);
+// p2 end
 
 // ID stage
 
@@ -228,6 +262,7 @@ IDEX IDEX(
     .rs1_addr (IDrs1),
     .rs2_addr (IDrs2),
     .rd_addr (IDrd),
+    .opcode (IDopcode),
     .funct3 (IDfunct3),
     .funct7 (IDfunct7),
     .WB (IDWB),
@@ -378,5 +413,8 @@ assign IFflush = HDflush;
 assign IFstall = HDstall;
 assign EXnop = IFflush | IFstall;
 assign PC_select = HDflush;
+//
+// project1 end
+//
 
 endmodule
