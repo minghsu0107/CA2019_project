@@ -1,0 +1,1 @@
+Cycle:           2, Read Miss , Address: 00000000, Read Data : 00000000

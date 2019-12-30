@@ -1,10 +1,10 @@
-module IDEX(clk_i,rs1_data,rs2_data,Iimm,rs1_addr,rs2_addr,rd_addr,opcode,funct3,funct7,WB,Mem,ALUOp,ALUSrc,val1,val2,imm,ALUCtrl,rs1_addr_o,rs2_addr_o,rd_addr_o,Mem_o,WB_o,ALUSrc_o);
+module IDEX(clk_i,rs1_data,rs2_data,Iimm,rs1_addr,rs2_addr,rd_addr,opcode,funct3,funct7,WB,Mem,ALUOp,ALUSrc,val1,val2,imm,ALUCtrl,stall,rs1_addr_o,rs2_addr_o,rd_addr_o,Mem_o,WB_o,ALUSrc_o);
     input [31:0] rs1_data,rs2_data,Iimm;
     input [4:0] rs1_addr,rs2_addr,rd_addr;
     input [2:0] funct3;
     input [6:0] opcode,funct7;
     input [1:0] Mem,ALUOp;
-    input WB,ALUSrc,clk_i;
+    input WB,ALUSrc,clk_i,stall;
     output reg [31:0] val1,val2,imm;
     output reg [3:0] ALUCtrl;
     output reg [4:0] rs1_addr_o,rs2_addr_o,rd_addr_o;
@@ -19,16 +19,18 @@ module IDEX(clk_i,rs1_data,rs2_data,Iimm,rs1_addr,rs2_addr,rd_addr,opcode,funct3
     end
 
     always @ ( posedge clk_i ) begin
-        val1 <= rs1_data;
-        val2 <= rs2_data;
-        imm <= Iimm;
-        rs1_addr_o <= rs1_addr;
-        rs2_addr_o <= rs2_addr;
-        rd_addr_o <= rd_addr;
-        Mem_o <= Mem;
-        WB_o <= WB;
-        ALUCtrl <= tmp;
-        ALUSrc_o <= ALUSrc;
+        if (~stall) begin
+            val1 <= rs1_data;
+            val2 <= rs2_data;
+            imm <= Iimm;
+            rs1_addr_o <= rs1_addr;
+            rs2_addr_o <= rs2_addr;
+            rd_addr_o <= rd_addr;
+            Mem_o <= Mem;
+            WB_o <= WB;
+            ALUCtrl <= tmp;
+            ALUSrc_o <= ALUSrc;
+        end
     end
 
     // control

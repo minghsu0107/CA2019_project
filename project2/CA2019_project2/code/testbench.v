@@ -92,7 +92,7 @@ initial begin
 end
   
 always@(posedge Clk) begin
-    if(counter == 150) begin    // store cache to memory
+    if(counter == 5) begin    // store cache to memory
         $fdisplay(outfile, "Flush Cache! \n");
         for(i=0; i<32; i=i+1) begin
             tag = CPU.dcache.dcache_tag_sram.memory[i];
@@ -101,12 +101,14 @@ always@(posedge Clk) begin
             Data_Memory.memory[address] = CPU.dcache.dcache_data_sram.memory[i];
         end 
     end
-    if(counter > 150) begin    // stop 
+    if(counter > 5) begin    // stop 
         $finish;
     end
         
     // print PC 
     $fdisplay(outfile, "cycle = %0d, Start = %b\nPC = %d", counter, Start, CPU.PC.pc_o);
+
+    $fdisplay(outfile, "cache_stall = %d\n", CPU.cache_stall);
     
     // print Registers
     $fdisplay(outfile, "Registers");

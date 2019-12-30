@@ -31,7 +31,7 @@ output				mem_write_o;
 // add your project1 here!
 //
 wire [31:0] cur_PC,nxt_PC1,branch_PC,nxt_PC;
-wire PCWrite,PC_select;
+wire PCWrite,PC_select,PCstall,cache_stall;
 
 Adder Add_PC(
     .data1_i (cur_PC),
@@ -45,47 +45,33 @@ MUX PC_MUX(
     .select_i (PC_select),
     .data_o (nxt_PC)
 );
-/*
+
+// p2
 PC PC(
     .clk_i          (clk_i),
     .start_i        (start_i),
     .rst_i          (rst_i),
+    .stall_i        (PCstall),
     .PCWrite_i      (PCWrite),
     .pc_i           (nxt_PC),
     .pc_o           (cur_PC)
 );
-*/
-// p2
-PC PC
-(
-	.clk_i(clk_i),
-	.rst_i(rst_i),
-	.start_i(start_i),
-	.stall_i(),
-	.PCWrite_i(),
-	.pc_i(),
-	.pc_o()
-);
 // p2 end
 
 wire [31:0] instr;
-/*
+
+// p2
 Instruction_Memory Instruction_Memory(
     .addr_i         (cur_PC),
     .instr_o        (instr)
-);
-*/
-// p2
-Instruction_Memory Instruction_Memory(
-	.addr_i(),
-	.instr_o()
 );
 // p2 end
 
 wire [4:0] RS1addr,RS2addr,RDaddr;
 wire [31:0] RS1data,RS2data,RDdata;
 wire RegWrite;
-/*
+
+// p2
 Registers Registers(
     .clk_i          (clk_i),
     .RS1addr_i      (RS1addr),
@@ -96,30 +82,24 @@ Registers Registers(
     .RS1data_o      (RS1data),
     .RS2data_o      (RS2data)
 );
-*/
-// p2
-Registers Registers(
-	.clk_i(clk_i),
-	.RS1addr_i(),
-	.RS2addr_i(),
-	.RDaddr_i(),
-	.RDdata_i(),
-	.RegWrite_i(),
-	.RS1data_o(),
-	.RS2data_o()
-);
 // p2 end
 
 wire [31:0] DMaddr,DMRdata,DMWdata;
-wire MemWrite;
+wire MemWrite,MemRead;
 
+/*
 Data_Memory Data_Memory(
     .clk_i          (clk_i),
-    .addr_i         (DMaddr),
-    .MemWrite_i     (MemWrite),
-    .data_i         (DMWdata),
-    .data_o         (DMRdata)
+    .rst_i          (rst_i),
+    .addr_i         (mem_addr_o),
+    .data_i         (mem_data_o),
+    .enable_i       (mem_enable_o),
+    .write_i        (mem_write_o),
+    .ack_o          (mem_ack_i),
+    .data_o         (mem_data_i)
 );
+*/
+
 // p2
 // data cache
 dcache_top dcache
@@ -137,12 +117,12 @@ dcache_top dcache
 	.mem_write_o(mem_write_o),
 
 	// to CPU interface
-	.p1_data_i(),
-	.p1_addr_i(),
-	.p1_MemRead_i(),
-	.p1_MemWrite_i(),
-	.p1_data_o(),
-	.p1_stall_o()
+	.p1_data_i(DMWdata),
+	.p1_addr_i(DMaddr),
+	.p1_MemRead_i(MemRead),
+	.p1_MemWrite_i(MemWrite),
+	.p1_data_o(DMRdata),
+	.p1_stall_o(cache_stall)
 );
 // p2 end
 
@@ -158,7 +138,7 @@ IFID IFID(
     .instr_i (instr),
     .instr_o (ID_instr),
     .IFflush (IFflush),
-    .IFstall (IFstall)
+    .IFstall (IFstall|cache_stall)
 );
 
 wire [6:0] IDfunct7,IDopcode;
@@ -273,6 +253,7 @@ IDEX IDEX(
     .val2 (EXval2),
     .imm (EXimm),
     .ALUCtrl (ALUCtrl),
+    .stall (cache_stall),
     .rs1_addr_o (EXrs1),
     .rs2_addr_o (EXrs2),
     .rd_addr_o (EXrd),
@@ -326,6 +307,7 @@ EXMEM EXMEM(
     .rs1_data_i (EXval1),
     .rs2_data_i (EX_rs2_data),
     .rd_addr_i (EXrd),
+    .stall (cache_stall),
     .Memaddr_o (Memaddr),
     .Memdata_o (Memdata),
     .WB_o (MEM_WB),
@@ -337,6 +319,7 @@ EXMEM EXMEM(
 assign DMaddr = Memaddr;
 assign DMWdata = Memdata;
 assign MemWrite = ( Mem == 2'b10 ? 1'b1 : 1'b0 );
+assign MemRead = ( Mem == 2'b01 ? 1'b1 : 1'b0 );
 assign MemRdata = DMRdata;
 assign MEM_WBSrc = ( Mem == 2'b01 ? 1'b1 : 1'b0 );
 assign ALUForward1 = MEM_ALUres;
@@ -355,6 +338,7 @@ MEMWB MEMWB(
     .ALUres_i (MEM_ALUres),
     .rd_addr_i (MEMrd),
     .WBSrc_i (MEM_WBSrc),
+    .stall (cache_stall),
     .WB_o (WBWB),
     .MemRdata_o (WB_Memdata),
     .ALUres_o (WB_ALUres),
@@ -408,7 +392,8 @@ HazardDetection HD(
     .Mux_o (HDMux)
 );
 
-assign PCWrite = HD_PCWrite;
+assign PCstall = (~HD_PCWrite)|cache_stall;
+assign PCWrite = ~PCstall;
 assign IFflush = HDflush;
 assign IFstall = HDstall;
 assign EXnop = IFflush | IFstall;
