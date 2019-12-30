@@ -1,52 +1,52 @@
 module dcache_top
 (
     // System clock, reset and stall
-    clk_i, 
+    clk_i,
     rst_i,
-    
-    // to Data Memory interface        
-    mem_data_i, 
-    mem_ack_i,     
-    mem_data_o, 
-    mem_addr_o,     
-    mem_enable_o, 
-    mem_write_o, 
-    
-    // to CPU interface    
-    p1_data_i, 
-    p1_addr_i,     
-    p1_MemRead_i, 
-    p1_MemWrite_i, 
-    p1_data_o, 
+
+    // to Data Memory interface
+    mem_data_i,
+    mem_ack_i,
+    mem_data_o,
+    mem_addr_o,
+    mem_enable_o,
+    mem_write_o,
+
+    // to CPU interface
+    p1_data_i,
+    p1_addr_i,
+    p1_MemRead_i,
+    p1_MemWrite_i,
+    p1_data_o,
     p1_stall_o
 );
 //
 // System clock, start
 //
-input                 clk_i; 
+input                 clk_i;
 input                 rst_i;
 
 //
-// to Data Memory interface        
+// to Data Memory interface
 //
-input    [256-1:0]    mem_data_i; 
-input                 mem_ack_i; 
-    
-output   [256-1:0]    mem_data_o; 
-output   [32-1:0]     mem_addr_o;     
-output                mem_enable_o; 
-output                mem_write_o; 
-    
-//    
-// to core interface            
-//    
-input    [32-1:0]     p1_data_i; 
-input    [32-1:0]     p1_addr_i;     
-input                 p1_MemRead_i; 
-input                 p1_MemWrite_i; 
+input    [256-1:0]    mem_data_i;
+input                 mem_ack_i;
 
-output   [32-1:0]     p1_data_o; 
-output                p1_stall_o; 
+output   [256-1:0]    mem_data_o;
+output   [32-1:0]     mem_addr_o;
+output                mem_enable_o;
+output                mem_write_o;
+
+//
+// to core interface
+//
+input    [32-1:0]     p1_data_i;
+input    [32-1:0]     p1_addr_i;
+input                 p1_MemRead_i;
+input                 p1_MemWrite_i;
+
+output   [32-1:0]     p1_data_o;
+output                p1_stall_o;
 
 //
 // to SRAM interface
@@ -95,7 +95,7 @@ assign    p1_offset  = p1_addr_i[4:0];
 assign    p1_index   = p1_addr_i[9:5];
 assign    p1_tag     = p1_addr_i[31:10];
 assign    p1_stall_o = ~hit & p1_req;
-assign    p1_data_o  = p1_data; 
+assign    p1_data_o  = p1_data;
 
 // SRAM interface
 assign    sram_valid = sram_cache_tag[23];
@@ -104,7 +104,7 @@ assign    sram_tag   = sram_cache_tag[21:0];
 assign    cache_sram_index  = p1_index;
 assign    cache_sram_enable = p1_req;
 assign    cache_sram_write  = cache_we | write_hit;
-assign    cache_sram_tag    = {1'b1, cache_dirty, p1_tag};    
+assign    cache_sram_tag    = {1'b1, cache_dirty, p1_tag};
 assign    cache_sram_data   = (hit) ? w_hit_data : mem_data_i;
 
 // memory interface
@@ -123,7 +123,7 @@ assign r_hit_data=sram_cache_data;
 // read data :  256-bit to 32-bit
 always@(p1_offset or r_hit_data) begin
     // TODO: add you code here! (p1_data=...?)
-    p1_data <= r_hit_data[(p1_offset<<3) +: 32];
+    p1_data <= r_hit_data[p1_offset*8 +: 32];
 end
 
 
@@ -131,21 +131,21 @@ end
 always@(p1_offset or r_hit_data or p1_data_i) begin
     // TODO: add you code here! (w_hit_data=...?)
     w_hit_data <= sram_cache_data;
-    w_hit_data[(p1_offset<<3) +: 32] <= p1_data_i;
+    w_hit_data[p1_offset*8 +: 32] <= p1_data_i[31:0];
 end
 
 
-// controller 
+// controller
 always@(posedge clk_i or negedge rst_i) begin
     if(~rst_i) begin
         state      <= STATE_IDLE;
         mem_enable <= 1'b0;
         mem_write  <= 1'b0;
-        cache_we   <= 1'b0; 
+        cache_we   <= 1'b0;
         write_back <= 1'b0;
     end
     else begin
-        case(state)        
+        case(state)
             STATE_IDLE: begin
                 if(p1_req && !hit) begin      //wait for request
                     state <= STATE_MISS;
@@ -156,7 +156,7 @@ always@(posedge clk_i or negedge rst_i) begin
             end
             STATE_MISS: begin
                 if(sram_dirty) begin          //write back if dirty
-                    // TODO: add you code here! 
+                    // TODO: add you code here!
                     write_back <= 1'b1;
                     mem_write <= 1'b1;
                     mem_enable <= 1'b1;
@@ -164,7 +164,7 @@ always@(posedge clk_i or negedge rst_i) begin
                     state <= STATE_WRITEBACK;
                 end
                 else begin                    //write allocate: write miss = read miss + write hit; read miss = read miss + read hit
-                    // TODO: add you code here! 
+                    // TODO: add you code here!
                     write_back <= 1'b0;
                     mem_write <= 1'b0;
                     mem_enable <= 1'b1;
@@ -174,8 +174,9 @@ always@(posedge clk_i or negedge rst_i) begin
             end
             STATE_READMISS: begin
                 if(mem_ack_i) begin            //wait for data memory acknowledge
-                    // TODO: add you code here! 
+                    // TODO: add you code here!
                     cache_we <= 1'b1;
+                    mem_enable <= 1'b0;
                     state <= STATE_READMISSOK;
                 end
                 else begin
@@ -192,11 +193,11 @@ always@(posedge clk_i or negedge rst_i) begin
             end
             STATE_WRITEBACK: begin
                 if(mem_ack_i) begin            //wait for data memory acknowledge
-                    // TODO: add you code here! 
+                    // TODO: add you code here!
                     write_back <= 1'b0;
                     mem_write <= 1'b0;
                     mem_enable <= 1'b1;
-                    cache_we <= 1'b1;
+                    cache_we <= 1'b0;
                     state <= STATE_READMISS;
                 end
                 else begin

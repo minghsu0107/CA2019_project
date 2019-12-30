@@ -107,15 +107,22 @@ always@(posedge Clk) begin
         
     // print PC 
     $fdisplay(outfile, "cycle = %0d, Start = %b\nPC = %d", counter, Start, CPU.PC.pc_o);
-
+/*
     $fdisplay(outfile, "cache_stall = %d\n", CPU.cache_stall);
     $fdisplay(outfile, "IDopcode = %d\n", CPU.IDopcode);
     $fdisplay(outfile, "IDMem1 = %d, IDMem = %d, EXMem = %d, Mem = %d\n",CPU.IDMem1,CPU.IDMem,CPU.EXMem,CPU.Mem);
     $fdisplay(outfile, "p1_tag = %d, sram_cache_tag = %d, sram_valid = %d, hit = %d\n",CPU.dcache.p1_tag,CPU.dcache.sram_cache_tag[21:0],CPU.dcache.sram_valid,CPU.dcache.hit);
     $fdisplay(outfile, "sram_dirty = %d, mem_ack_i = %d, state = %d, cache_we = %d\n",CPU.dcache.sram_dirty,CPU.dcache.mem_ack_i,CPU.dcache.state,CPU.dcache.cache_we);
     $fdisplay(outfile, "cache_sram_index = %d, cache_sram_tag = %d, cache_sram_enable = %d, cache_sram_write = %d\n",CPU.dcache.cache_sram_index,CPU.dcache.cache_sram_tag[21:0],CPU.dcache.cache_sram_enable,CPU.dcache.cache_sram_write);
+    $fdisplay(outfile, "cache_p1_MemRead_i=%d, cache_CPU.dcache.p1_data_o=%h\n", CPU.dcache.p1_MemRead_i, CPU.dcache.p1_data_o);
+
+    //$fdisplay(outfile, "cache_p1_offset=%d\n", CPU.dcache.p1_offset);
+    //$fdisplay(outfile, "cache_w_hit_data=%h\n", CPU.dcache.w_hit_data);
     $fdisplay(outfile, "write_back = %d, mem_write = %d, mem_enable = %d\n",CPU.dcache.write_back,CPU.dcache.mem_write,CPU.dcache.mem_enable);
-    
+    $fdisplay(outfile, "Dm: enable=%d, write=%d, ack=%d, count=%d\n", Data_Memory.enable_i, Data_Memory.write_i, Data_Memory.ack_o, Data_Memory.count);
+    $fdisplay(outfile, "Dm: state=%d\n", Data_Memory.state);
+    $fdisplay(outfile, "Dm: addr=%h, data=%h\n", Data_Memory.addr_i, Data_Memory.data_i);
+*/
     // print Registers
     $fdisplay(outfile, "Registers");
     $fdisplay(outfile, "x0 = %h, x8  = %h, x16 = %h, x24 = %h", CPU.Registers.register[0], CPU.Registers.register[8] , CPU.Registers.register[16], CPU.Registers.register[24]);
