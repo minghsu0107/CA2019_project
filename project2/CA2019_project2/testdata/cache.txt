@@ -1,1 +1,2 @@
-Cycle:           2, Read Miss , Address: 00000000, Read Data : 00000000
+Cycle:           4, Write Miss, Address: 00000000, Write Data: 00000000
+Cycle:          19, Write Hit , Address: 00000004, Write Data: 00000111

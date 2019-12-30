@@ -319,13 +319,11 @@ EXMEM EXMEM(
 assign DMaddr = Memaddr;
 assign DMWdata = Memdata;
 assign MemWrite = ( Mem == 2'b10 ? 1'b1 : 1'b0 );
-assign MemRead = ( Mem == 2'b01 ? 1'b1 : 1'b0 );
+assign MemRead = ( Mem == 2'b10 ? 1'b1 : 1'b0 );
 assign MemRdata = DMRdata;
 assign MEM_WBSrc = ( Mem == 2'b01 ? 1'b1 : 1'b0 );
 assign ALUForward1 = MEM_ALUres;
 assign ALUForward2 = MEM_ALUres;
-
-// WB stage
 
 wire [31:0] WB_Memdata,WB_ALUres;
 wire [4:0] WBrd;

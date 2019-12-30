@@ -92,7 +92,7 @@ initial begin
 end
   
 always@(posedge Clk) begin
-    if(counter == 5) begin    // store cache to memory
+    if(counter == 20) begin    // store cache to memory
         $fdisplay(outfile, "Flush Cache! \n");
         for(i=0; i<32; i=i+1) begin
             tag = CPU.dcache.dcache_tag_sram.memory[i];
@@ -101,7 +101,7 @@ always@(posedge Clk) begin
             Data_Memory.memory[address] = CPU.dcache.dcache_data_sram.memory[i];
         end 
     end
-    if(counter > 5) begin    // stop 
+    if(counter > 20) begin    // stop 
         $finish;
     end
         
@@ -109,6 +109,12 @@ always@(posedge Clk) begin
     $fdisplay(outfile, "cycle = %0d, Start = %b\nPC = %d", counter, Start, CPU.PC.pc_o);
 
     $fdisplay(outfile, "cache_stall = %d\n", CPU.cache_stall);
+    $fdisplay(outfile, "IDopcode = %d\n", CPU.IDopcode);
+    $fdisplay(outfile, "IDMem1 = %d, IDMem = %d, EXMem = %d, Mem = %d\n",CPU.IDMem1,CPU.IDMem,CPU.EXMem,CPU.Mem);
+    $fdisplay(outfile, "p1_tag = %d, sram_cache_tag = %d, sram_valid = %d, hit = %d\n",CPU.dcache.p1_tag,CPU.dcache.sram_cache_tag[21:0],CPU.dcache.sram_valid,CPU.dcache.hit);
+    $fdisplay(outfile, "sram_dirty = %d, mem_ack_i = %d, state = %d, cache_we = %d\n",CPU.dcache.sram_dirty,CPU.dcache.mem_ack_i,CPU.dcache.state,CPU.dcache.cache_we);
+    $fdisplay(outfile, "cache_sram_index = %d, cache_sram_tag = %d, cache_sram_enable = %d, cache_sram_write = %d\n",CPU.dcache.cache_sram_index,CPU.dcache.cache_sram_tag[21:0],CPU.dcache.cache_sram_enable,CPU.dcache.cache_sram_write);
+    $fdisplay(outfile, "write_back = %d, mem_write = %d, mem_enable = %d\n",CPU.dcache.write_back,CPU.dcache.mem_write,CPU.dcache.mem_enable);
     
     // print Registers
     $fdisplay(outfile, "Registers");
